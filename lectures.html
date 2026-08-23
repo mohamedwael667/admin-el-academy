@@ -21,27 +21,21 @@ a{text-decoration:none;color:inherit}
 .logo img{width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,255,255,.4)}
 .logo b{background:linear-gradient(90deg,#93c5fd,#fde047);-webkit-background-clip:text;color:transparent}
 .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:12px;font-weight:800;font-size:14px;font-family:inherit;cursor:pointer;transition:.3s;border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--text)}
-.btn:hover{transform:translateY(-2px)}
 .btn.danger{color:#fca5a5;border-color:rgba(239,68,68,.35);background:none}
-.btn.danger:hover{background:rgba(239,68,68,.12)}
 main{position:relative;z-index:1;padding:40px 0 70px}
 .page-head{text-align:center;margin-bottom:28px}
 .page-head h1{font-size:clamp(24px,4vw,38px);font-weight:900}
 .page-head h1 i{color:var(--gold)}
 .page-head p{color:var(--muted);margin-top:8px}
-.note{display:flex;justify-content:center;margin-bottom:22px}
-.note span{display:inline-flex;gap:8px;align-items:center;font-size:12.5px;font-weight:800;color:var(--muted);background:rgba(255,255,255,.04);border:1px dashed var(--line);padding:8px 18px;border-radius:50px}
-.note i{color:var(--sky)}
-.filters{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-bottom:30px}
+.filters{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-bottom:26px}
 .filters select{padding:11px 18px;border-radius:12px;background:rgba(255,255,255,.05);border:1px solid var(--line);color:var(--text);font-family:inherit;font-size:14px;font-weight:800;outline:none;cursor:pointer}
-.filters select:focus{border-color:#2563eb}
 .filters select option{background:#081231}
 .count{text-align:center;color:var(--muted);font-size:13px;font-weight:800;margin-bottom:18px}
 .count b{color:var(--gold)}
 .lecs{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
 .lec{border-radius:20px;overflow:hidden;background:rgba(8,18,49,.6);border:1px solid var(--line);transition:.35s;cursor:pointer}
 .lec:hover{transform:translateY(-8px);border-color:rgba(56,189,248,.45);box-shadow:0 20px 50px rgba(0,0,0,.45)}
-.thumb{position:relative;aspect-ratio:16/9;overflow:hidden}
+.thumb{position:relative;aspect-ratio:16/9;overflow:hidden;background:#081231}
 .thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:.5s}
 .lec:hover .thumb img{transform:scale(1.08)}
 .play{position:absolute;inset:0;display:grid;place-items:center}
@@ -53,8 +47,9 @@ main{position:relative;z-index:1;padding:40px 0 70px}
 .lec-body h3{font-size:15.5px;font-weight:800;margin-bottom:8px;line-height:1.6;min-height:48px}
 .lec-meta{color:var(--muted);font-size:12.5px;font-weight:700;display:flex;gap:12px;flex-wrap:wrap}
 .lec-meta i{color:var(--sky);margin-left:4px}
-.empty{text-align:center;color:var(--muted);padding:50px 0;font-weight:800;display:none}
-.empty i{font-size:40px;color:var(--sky);display:block;margin-bottom:14px}
+.empty{text-align:center;color:var(--muted);padding:60px 0;font-weight:800}
+.empty i{font-size:50px;color:var(--sky);display:block;margin-bottom:14px}
+.empty p{font-size:16px}
 .modal{position:fixed;inset:0;background:rgba(2,6,18,.88);backdrop-filter:blur(8px);display:none;place-items:center;z-index:100;padding:20px}
 .modal.open{display:grid}
 .modal-box{width:min(920px,95vw)}
@@ -87,8 +82,6 @@ main{position:relative;z-index:1;padding:40px 0 70px}
     <p>كل محاضراتك مرتبة بالفرقة والقسم — دوس على أي محاضرة وشاهدها جوه المنصة</p>
   </section>
 
-  <div class="note"><span><i class="fa-solid fa-circle-info"></i> محتوى تجريبي للعرض — إضافة المحاضرات الحقيقية هتبقى من لوحة الأدمن في خطوة قريبة</span></div>
-
   <div class="filters">
     <select id="fYear">
       <option value="">كل الفرق</option><option>الأولى</option><option>الثانية</option><option>الثالثة</option><option>الرابعة</option>
@@ -99,8 +92,13 @@ main{position:relative;z-index:1;padding:40px 0 70px}
   </div>
 
   <p class="count">عدد المحاضرات المعروضة: <b id="count">0</b></p>
-  <div class="lecs" id="lecs"></div>
-  <div class="empty" id="empty"><i class="fa-solid fa-video-slash"></i>مفيش محاضرات في الاختيار ده حاليًا</div>
+  <div id="content">
+    <div class="lecs" id="lecs"></div>
+  </div>
+  <div class="empty" id="empty" style="display:none">
+    <i class="fa-solid fa-video-slash"></i>
+    <p id="emptyText">مفيش محاضرات حاليًا — الأدمن هيضيفها قريبًا</p>
+  </div>
 </main>
 
 <div class="modal" id="modal">
@@ -112,38 +110,51 @@ main{position:relative;z-index:1;padding:40px 0 70px}
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script src="js/config.js"></script>
 <script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
   auth.onAuthStateChanged(user=>{if(!user)location.href='login.html';});
   $('logoutBtn').onclick=async()=>{localStorage.removeItem('aea_user');await auth.signOut();location.href='index.html';};
 
   function $(id){return document.getElementById(id)}
 
-  // 🎬 بيانات تجريبية — هنستبدلها بقاعدة البيانات في خطوة لوحة الأدمن
-  const LECTURES=[
-    {yt:'aircAruvnKk',title:'مقدمة في نظم المعلومات الإدارية',subject:'نظم معلومات',doctor:'د. أحمد محمود',dept:'نظم ومعلومات إدارية',year:'الأولى',dur:'45:20'},
-    {yt:'rfscVS0vtbw',title:'أساسيات البرمجة والحاسب الآلي',subject:'حاسب آلي',doctor:'د. منى خالد',dept:'نظم ومعلومات إدارية',year:'الأولى',dur:'1:02:11'},
-    {yt:'jNQXAC9IVRw',title:'مبادئ الإدارة الحديثة',subject:'إدارة',doctor:'د. سارة علي',dept:'إدارة أعمال',year:'الأولى',dur:'38:45'},
-    {yt:'rfscVS0vtbw',title:'قواعد البيانات SQL من الصفر',subject:'قواعد بيانات',doctor:'د. منى خالد',dept:'نظم ومعلومات إدارية',year:'الثانية',dur:'2:15:30'},
-    {yt:'aircAruvnKk',title:'السلوك التنظيمي في الشركات',subject:'إدارة',doctor:'د. سارة علي',dept:'إدارة أعمال',year:'الثانية',dur:'52:10'},
-    {yt:'jNQXAC9IVRw',title:'مقدمة في التسويق الحديث',subject:'تسويق',doctor:'د. محمد حسن',dept:'تسويق',year:'الأولى',dur:'41:00'},
-    {yt:'aircAruvnKk',title:'تحليل وتصميم النظم',subject:'نظم',doctor:'د. أحمد محمود',dept:'نظم ومعلومات إدارية',year:'الثالثة',dur:'1:10:25'},
-    {yt:'rfscVS0vtbw',title:'التسويق الرقمي والسوشيال ميديا',subject:'تسويق',doctor:'د. محمد حسن',dept:'تسويق',year:'الثالثة',dur:'58:40'},
-    {yt:'jNQXAC9IVRw',title:'إدارة المشاريع واحتراف القيادة',subject:'إدارة',doctor:'د. سارة علي',dept:'إدارة أعمال',year:'الرابعة',dur:'1:05:15'}
-  ];
+  let LECTURES=[];
+
+  async function load(){
+    try{
+      const snap=await db.collection('lectures').get();
+      LECTURES=[];
+      snap.forEach(d=>LECTURES.push(d.data()));
+      // رتبهم من الأحدث للأقدم
+      LECTURES.sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
+    }catch(e){console.warn(e);LECTURES=[];}
+    render();
+  }
 
   function render(){
     const y=$('fYear').value,d=$('fDept').value;
     const list=LECTURES.filter(l=>(!y||l.year===y)&&(!d||l.dept===d));
     $('count').textContent=list.length;
-    $('empty').style.display=list.length?'none':'block';
+    
+    if(list.length===0){
+      $('content').style.display='none';
+      $('empty').style.display='block';
+      if(LECTURES.length===0){
+        $('emptyText').textContent='مفيش محاضرات حاليًا — الأدمن هيضيفها قريبًا';
+      }else{
+        $('emptyText').textContent='مفيش محاضرات في الاختيار ده — جرّب فلتر تاني';
+      }
+      return;
+    }
+    
+    $('content').style.display='block';
+    $('empty').style.display='none';
     $('lecs').innerHTML=list.map((l,i)=>`
       <div class="lec" data-i="${LECTURES.indexOf(l)}">
         <div class="thumb">
           <img src="https://i.ytimg.com/vi/${l.yt}/hqdefault.jpg" alt="">
           <span class="play"><i class="fa-solid fa-play"></i></span>
-          <span class="dur">${l.dur}</span>
+          <span class="dur">${l.dur||'—'}</span>
         </div>
         <div class="lec-body">
           <span class="tag">${l.subject} — الفرقة ${l.year}</span>
@@ -153,61 +164,6 @@ main{position:relative;z-index:1;padding:40px 0 70px}
       </div>`).join('');
     document.querySelectorAll('.lec').forEach(c=>c.onclick=()=>{
       const l=LECTURES[c.dataset.i];
-      $('mTitle').textContent=l.title+' — '+l.doctor;
-      $('mFrame').src='https://www.youtube.com/embed/'+l.yt+'?autoplay=1';
-      $('modal').classList.add('open');
-    });
-  }
-  $('fYear').onchange=render;$('fDept').onchange=render;
-  $('mClose').onclick=()=>{$('modal').classList.remove('open');$('mFrame').src='';};
-  $('modal').onclick=e=>{if(e.target.id==='modal'){$('modal').classList.remove('open');$('mFrame').src='';}};
-  render();
-<script>
-  auth.onAuthStateChanged(user=>{if(!user)location.href='login.html';});
-  $('logoutBtn').onclick=async()=>{localStorage.removeItem('aea_user');await auth.signOut();location.href='index.html';};
-  function $(id){return document.getElementById(id)}
-
-  const SAMPLE=[
-    {yt:'aircAruvnKk',title:'مقدمة في نظم المعلومات الإدارية',subject:'نظم معلومات',doctor:'د. أحمد محمود',dept:'نظم ومعلومات إدارية',year:'الأولى',dur:'45:20'},
-    {yt:'rfscVS0vtbw',title:'أساسيات البرمجة والحاسب الآلي',subject:'حاسب آلي',doctor:'د. منى خالد',dept:'نظم ومعلومات إدارية',year:'الأولى',dur:'1:02:11'},
-    {yt:'jNQXAC9IVRw',title:'مبادئ الإدارة الحديثة',subject:'إدارة',doctor:'د. سارة علي',dept:'إدارة أعمال',year:'الأولى',dur:'38:45'},
-    {yt:'rfscVS0vtbw',title:'قواعد البيانات SQL من الصفر',subject:'قواعد بيانات',doctor:'د. منى خالد',dept:'نظم ومعلومات إدارية',year:'الثانية',dur:'2:15:30'},
-    {yt:'aircAruvnKk',title:'السلوك التنظيمي في الشركات',subject:'إدارة',doctor:'د. سارة علي',dept:'إدارة أعمال',year:'الثانية',dur:'52:10'},
-    {yt:'jNQXAC9IVRw',title:'مقدمة في التسويق الحديث',subject:'تسويق',doctor:'د. محمد حسن',dept:'تسويق',year:'الأولى',dur:'41:00'},
-    {yt:'aircAruvnKk',title:'تحليل وتصميم النظم',subject:'نظم',doctor:'د. أحمد محمود',dept:'نظم ومعلومات إدارية',year:'الثالثة',dur:'1:10:25'},
-    {yt:'rfscVS0vtbw',title:'التسويق الرقمي والسوشيال ميديا',subject:'تسويق',doctor:'د. محمد حسن',dept:'تسويق',year:'الثالثة',dur:'58:40'},
-    {yt:'jNQXAC9IVRw',title:'إدارة المشاريع واحتراف القيادة',subject:'إدارة',doctor:'د. سارة علي',dept:'إدارة أعمال',year:'الرابعة',dur:'1:05:15'}
-  ];
-  let LECTURES=SAMPLE.slice();
-
-  async function load(){
-    try{
-      const snap=await db.collection('lectures').get();
-      if(!snap.empty){LECTURES=[];snap.forEach(d=>LECTURES.push(d.data()));LECTURES.reverse();}
-    }catch(e){console.warn(e)}
-    render();
-  }
-
-  function render(){
-    const y=$('fYear').value,d=$('fDept').value;
-    const list=LECTURES.filter(l=>(!y||l.year===y)&&(!d||l.dept===d));
-    $('count').textContent=list.length;
-    $('empty').style.display=list.length?'none':'block';
-    $('lecs').innerHTML=list.map((l,i)=>`
-      <div class="lec" data-i="${list.indexOf(l)}">
-        <div class="thumb">
-          <img src="https://i.ytimg.com/vi/${l.yt}/hqdefault.jpg" alt="">
-          <span class="play"><i class="fa-solid fa-play"></i></span>
-          <span class="dur">${l.dur}</span>
-        </div>
-        <div class="lec-body">
-          <span class="tag">${l.subject} — الفرقة ${l.year}</span>
-          <h3>${l.title}</h3>
-          <div class="lec-meta"><span><i class="fa-solid fa-user-doctor"></i>${l.doctor}</span><span><i class="fa-solid fa-layer-group"></i>${l.dept}</span></div>
-        </div>
-      </div>`).join('');
-    document.querySelectorAll('.lec').forEach(c=>c.onclick=()=>{
-      const l=list[c.dataset.i];
       $('mTitle').textContent=l.title+' — '+l.doctor;
       $('mFrame').src='https://www.youtube.com/embed/'+l.yt+'?autoplay=1';
       $('modal').classList.add('open');
