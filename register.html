@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>إنشاء حساب | Admin El Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#050b1e;--line:rgba(255,255,255,.09);--royal2:#2563eb;--sky:#38bdf8;--gold:#facc15;--text:#eef2ff;--muted:#9fb0ce;--grad:linear-gradient(135deg,#1e3a8a,#2563eb 55%,#38bdf8)}
+body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:grid;place-items:center;padding:40px 16px;position:relative;overflow-x:hidden}
+a{text-decoration:none}
+.blob{position:fixed;border-radius:50%;filter:blur(95px);opacity:.4}
+.blob-1{width:520px;height:520px;background:radial-gradient(circle,#1d4ed8,transparent 65%);top:-140px;right:-120px}
+.blob-2{width:460px;height:460px;background:radial-gradient(circle,#0e7490,transparent 65%);bottom:-120px;left:-100px}
+.home-link{position:fixed;top:20px;right:22px;color:var(--muted);font-weight:700;font-size:14px;z-index:5}
+.home-link:hover{color:var(--sky)}
+.auth-card{position:relative;z-index:2;width:min(600px,96vw);background:rgba(8,18,49,.78);backdrop-filter:blur(20px);border:1px solid var(--line);border-radius:26px;padding:40px 34px;box-shadow:0 30px 80px rgba(0,0,0,.55)}
+.auth-logo{width:80px;height:80px;border-radius:50%;object-fit:cover;border:3px solid rgba(255,255,255,.92);box-shadow:0 0 0 5px rgba(250,204,21,.2);display:block;margin:0 auto 14px}
+h1{text-align:center;font-size:24px;font-weight:900;background:linear-gradient(90deg,#93c5fd,#fde047);-webkit-background-clip:text;color:transparent}
+.sub{text-align:center;color:var(--muted);font-size:14px;margin:6px 0 22px}
+.alert{display:none;padding:12px 16px;border-radius:12px;margin-bottom:14px;font-size:14px;font-weight:700}
+.alert.error{background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.45);color:#fca5a5}
+.alert.success{background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.45);color:#86efac}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.field{margin-bottom:14px;text-align:right}
+.field label{display:block;font-weight:800;font-size:13px;margin-bottom:6px;color:#c9d4ea}
+.field input,.field select{width:100%;padding:12px 14px;border-radius:12px;background:rgba(255,255,255,.05);border:1px solid var(--line);color:var(--text);font-family:inherit;font-size:15px;outline:none;transition:.3s}
+.field input:focus,.field select:focus{border-color:var(--royal2);box-shadow:0 0 0 3px rgba(37,99,235,.22)}
+.field select option{background:#081231}
+.pass-wrap{position:relative}
+.pass-wrap input{direction:ltr;text-align:left;padding-right:46px}
+.eye{position:absolute;top:50%;right:10px;transform:translateY(-50%);background:none;border:none;color:var(--muted);cursor:pointer;padding:6px}
+.btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:14px;border-radius:14px;font-weight:800;font-size:16px;font-family:inherit;border:none;cursor:pointer;background:var(--grad);color:#fff;box-shadow:0 10px 30px rgba(37,99,235,.4);transition:.3s}
+.btn:hover{transform:translateY(-3px)}
+.spinner{display:none;width:18px;height:18px;border:3px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite}
+.btn.loading .spinner{display:inline-block}
+.btn.loading{pointer-events:none;opacity:.8}
+@keyframes spin{to{transform:rotate(360deg)}}
+.switch{text-align:center;color:var(--muted);font-size:14px;margin-top:18px}
+.switch a{color:var(--sky);font-weight:800}
+@media(max-width:560px){.row{grid-template-columns:1fr}.auth-card{padding:30px 20px}}
+</style>
+</head>
+<body>
+<a href="index.html" class="home-link"><i class="fa-solid fa-arrow-right"></i> العودة للرئيسية</a>
+<div class="blob blob-1"></div><div class="blob blob-2"></div>
+
+<div class="auth-card">
+  <img class="auth-logo" src="logo.png" alt="" onerror="this.style.display='none'">
+  <h1>إنشاء حساب جديد</h1>
+  <p class="sub">حسابك هيتحفظ فعليًا في قاعدة بيانات Firebase</p>
+  <div class="alert error" id="errBox"></div>
+  <div class="alert success" id="okBox"></div>
+  <form id="regForm" novalidate>
+    <div class="field"><label>الاسم الكامل</label><input id="name" type="text" placeholder="مثال: أحمد محمد" required></div>
+    <div class="row">
+      <div class="field"><label>البريد الإلكتروني</label><input id="email" type="email" placeholder="you@example.com" dir="ltr" required></div>
+      <div class="field"><label>رقم الموبايل</label><input id="phone" type="tel" placeholder="01xxxxxxxxx" dir="ltr"></div>
+    </div>
+    <div class="row">
+      <div class="field"><label>القسم</label><select id="dept"><option>نظم ومعلومات إدارية</option><option>إدارة أعمال</option><option>تسويق</option></select></div>
+      <div class="field"><label>الفرقة</label><select id="year"><option>الأولى</option><option>الثانية</option><option>الثالثة</option><option>الرابعة</option></select></div>
+    </div>
+    <div class="row">
+      <div class="field"><label>كلمة المرور</label><div class="pass-wrap"><input id="pass" type="password" placeholder="6 أحرف على الأقل" required><button type="button" class="eye" data-t="pass"><i class="fa-solid fa-eye"></i></button></div></div>
+      <div class="field"><label>تأكيد كلمة المرور</label><div class="pass-wrap"><input id="confirm" type="password" placeholder="********" required><button type="button" class="eye" data-t="confirm"><i class="fa-solid fa-eye"></i></button></div></div>
+    </div>
+    <button class="btn" id="submitBtn" type="submit"><span>إنشاء الحساب <i class="fa-solid fa-user-plus"></i></span><span class="spinner"></span></button>
+  </form>
+  <p class="switch">عندك حساب بالفعل؟ <a href="login.html">سجّل دخولك</a></p>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="js/config.js"></script>
+<script>
+  const $=id=>document.getElementById(id);
+  document.querySelectorAll('.eye').forEach(b=>b.onclick=()=>{
+    const i=document.getElementById(b.dataset.t);
+    i.type=i.type==='password'?'text':'password';
+    b.querySelector('i').className=i.type==='password'?'fa-solid fa-eye':'fa-solid fa-eye-slash';
+  });
+
+  const errBox=$('errBox'),okBox=$('okBox'),btn=$('submitBtn');
+  const showErr=m=>{errBox.textContent='⚠️ '+m;errBox.style.display='block';okBox.style.display='none'};
+  function arError(e){
+    const c=(e&&e.code)||'';
+    if(c==='auth/email-already-in-use')return 'البريد ده مسجل قبل كده — جرّب تسجيل الدخول.';
+    if(c==='auth/invalid-email')return 'اكتب بريد إلكتروني صحيح.';
+    if(c==='auth/weak-password')return 'كلمة المرور لازم تكون ٦ أحرف على الأقل.';
+    if(c==='auth/network-request-failed')return 'مشكلة اتصال بالإنترنت.';
+    if(c==='auth/operation-not-allowed')return 'فعّل Email/Password من Firebase Console (Authentication → Sign-in method).';
+    return 'حصلت مشكلة: '+((e&&e.message)||e);
+  }
+
+  $('regForm').addEventListener('submit',async e=>{
+    e.preventDefault();errBox.style.display='none';
+    const name=$('name').value.trim(),email=$('email').value.trim().toLowerCase(),phone=$('phone').value.trim();
+    const dept=$('dept').value,year=$('year').value,pass=$('pass').value,confirm=$('confirm').value;
+    if(name.length<3)return showErr('اكتب اسمك الكامل.');
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))return showErr('اكتب بريد إلكتروني صحيح.');
+    if(pass.length<6)return showErr('كلمة المرور لازم تكون ٦ أحرف على الأقل.');
+    if(pass!==confirm)return showErr('كلمتا المرور مش متطابقتين.');
+    btn.classList.add('loading');
+    try{
+      const cred=await auth.createUserWithEmailAndPassword(email,pass);
+      try{
+        await Promise.race([
+          db.collection('profiles').doc(cred.user.uid).set({name,email,phone,dept,year,createdAt:new Date().toISOString()}),
+          new Promise((_,rej)=>setTimeout(()=>rej(new Error('timeout')),8000))
+        ]);
+      }catch(dbErr){console.warn('profile save skipped:',dbErr);}
+      localStorage.setItem('aea_user',JSON.stringify({name,email}));
+      okBox.textContent='🎉 تم إنشاء حسابك بنجاح! جاري تحويلك...';
+      okBox.style.display='block';
+      setTimeout(()=>location.href='index.html',1000);
+    }catch(err){
+      showErr(arError(err));
+    }finally{
+      btn.classList.remove('loading');
+    }
+  });
+</script>
+</body>
+</html>ٌ

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>إدارة الاختبارات | Admin El Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#050b1e;--line:rgba(255,255,255,.09);--gold:#facc15;--text:#eef2ff;--muted:#9fb0ce;--grad:linear-gradient(135deg,#1e3a8a,#2563eb 55%,#38bdf8)}
+body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+.container{max-width:900px;margin:auto;padding:0 20px}
+.top{position:sticky;top:0;z-index:10;background:rgba(5,11,30,.85);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.top-wrap{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;gap:14px;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800}
+.logo img{width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,255,255,.4)}
+.logo b{background:linear-gradient(90deg,#93c5fd,#fde047);-webkit-background-clip:text;color:transparent}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:12px;font-weight:800;font-size:14px;font-family:inherit;cursor:pointer;transition:.3s;border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--text)}
+.btn.danger{color:#fca5a5;border-color:rgba(239,68,68,.35);background:none}
+.btn.primary{width:100%;justify-content:center;padding:14px;border:none;background:var(--grad);color:#fff;box-shadow:0 10px 30px rgba(37,99,235,.4);font-size:15px}
+main{position:relative;z-index:1;padding:40px 0 70px}
+.page-head{text-align:center;margin-bottom:28px}
+.page-head h1{font-size:clamp(22px,4vw,34px);font-weight:900}
+.page-head h1 i{color:var(--gold)}
+.card-glass{background:rgba(8,18,49,.6);backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:24px;padding:26px}
+.card-glass h2{font-size:17px;font-weight:900;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.card-glass h2 i{color:var(--gold)}
+.alert{display:none;padding:12px 16px;border-radius:12px;margin-bottom:14px;font-size:14px;font-weight:700}
+.alert.error{background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.45);color:#fca5a5}
+.alert.success{background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.45);color:#86efac}
+.field{margin-bottom:12px;text-align:right}
+.field label{display:block;font-weight:800;font-size:12.5px;margin-bottom:5px;color:#c9d4ea}
+.field input,.field select{width:100%;padding:11px 13px;border-radius:12px;background:rgba(255,255,255,.05);border:1px solid var(--line);color:var(--text);font-family:inherit;font-size:14px;outline:none}
+.field input:focus,.field select:focus{border-color:#2563eb}
+.field select option{background:#081231}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.qblock{border:1px dashed rgba(255,255,255,.2);border-radius:16px;padding:16px;margin-bottom:16px;background:rgba(255,255,255,.03)}
+.qblock .head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.no{border-radius:10px;padding:7px 14px;font-family:inherit;font-size:12px;font-weight:800;cursor:pointer;background:none;border:1px solid rgba(239,68,68,.35);color:#fca5a5}
+.list{display:flex;flex-direction:column;gap:12px}
+.item{background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:14px;padding:14px}
+.item-top{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:6px;align-items:center}
+.item-meta{color:var(--muted);font-size:12.5px;font-weight:700;margin-bottom:10px}
+.st{font-size:11px;font-weight:800;padding:4px 12px;border-radius:50px;background:rgba(250,204,21,.12);color:var(--gold);border:1px solid rgba(250,204,21,.4)}
+.muted{color:var(--muted);font-size:14px}
+.mt{margin-top:26px}
+.spinner{display:none;width:18px;height:18px;border:3px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite}
+.btn.loading .spinner{display:inline-block}.btn.loading{pointer-events:none;opacity:.8}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="container top-wrap">
+    <a href="index.html" class="logo"><img src="logo.png" alt="" onerror="this.style.display='none'"><span>Admin <b>El Academy</b></span></a>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <a href="admin.html" class="btn"><i class="fa-solid fa-gauge-high"></i> لوحة الأدمن</a>
+      <button id="logoutBtn" class="btn danger"><i class="fa-solid fa-right-from-bracket"></i> خروج</button>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+  <section class="page-head">
+    <h1>صانع الاختبارات <i class="fa-solid fa-file-pen"></i></h1>
+  </section>
+
+  <div class="card-glass" id="noAccess" style="display:none;text-align:center;padding:50px">
+    <i class="fa-solid fa-lock" style="font-size:44px;color:var(--gold);margin-bottom:16px;display:block"></i>
+    <h2 style="justify-content:center">مفيش صلاحية أدمن</h2>
+  </div>
+
+  <div id="adminArea">
+    <div class="card-glass">
+      <h2><i class="fa-solid fa-circle-plus"></i> اختبار جديد</h2>
+      <div class="alert error" id="errBox"></div>
+      <div class="alert success" id="okBox"></div>
+      <form id="quizForm" novalidate>
+        <div class="field"><label>عنوان الاختبار</label><input id="qzTitle" placeholder="مثال: اختبار المحاضرة ١ — نظم"></div>
+        <div class="row">
+          <div class="field"><label>المادة</label><input id="qzSubject" placeholder="مثال: نظم معلومات"></div>
+          <div class="field"><label>الفرقة</label><select id="qzYear"><option>الأولى</option><option>الثانية</option><option>الثالثة</option><option>الرابعة</option></select></div>
+        </div>
+        <div class="field"><label>القسم</label><select id="qzDept"><option>نظم ومعلومات إدارية</option><option>إدارة أعمال</option><option>تسويق</option></select></div>
+        <h2 style="margin-top:18px"><i class="fa-solid fa-list-check"></i> الأسئلة</h2>
+        <div id="qWrap"></div>
+        <button type="button" class="btn" id="addQ" style="width:100%;justify-content:center;margin-bottom:14px"><i class="fa-solid fa-plus"></i> إضافة سؤال</button>
+        <button class="btn primary" id="submitQuiz" type="submit"><span>نشر الاختبار <i class="fa-solid fa-paper-plane"></i></span><span class="spinner"></span></button>
+      </form>
+    </div>
+
+    <div class="card-glass mt">
+      <h2><i class="fa-solid fa-file-pen"></i> الاختبارات المضافة</h2>
+      <div id="quizList" class="list"><p class="muted">ثواني بنحمّل…</p></div>
+    </div>
+  </div>
+</main>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="js/config.js"></script>
+<script>
+  const ADMIN_EMAIL="admin@academy.com";
+  const $=id=>document.getElementById(id);
+
+  auth.onAuthStateChanged(user=>{
+    if(!user){location.href='login.html';return;}
+    if(user.email!==ADMIN_EMAIL){$('adminArea').style.display='none';$('noAccess').style.display='block';return;}
+    if(!document.querySelector('#qWrap .qblock'))addBlock();
+    loadQuizzes();
+  });
+
+  function addBlock(){
+    const n=document.querySelectorAll('#qWrap .qblock').length+1;
+    const div=document.createElement('div');
+    div.className='qblock';
+    div.innerHTML='<div class="head"><b>سؤال '+n+'</b><button type="button" class="no delQ"><i class="fa-solid fa-trash"></i> حذف</button></div>'+
+      '<div class="field"><input class="q-text" placeholder="اكتب نص السؤال هنا"></div>'+
+      '<div class="opts"><input class="q-opt" placeholder="الاختيار 1"><input class="q-opt" placeholder="الاختيار 2"><input class="q-opt" placeholder="الاختيار 3"><input class="q-opt" placeholder="الاختيار 4"></div>'+
+      '<div class="field"><label>الإجابة الصحيحة</label><select class="q-ans"><option value="0">الاختيار 1</option><option value="1">الاختيار 2</option><option value="2">الاختيار 3</option><option value="3">الاختيار 4</option></select></div>';
+    $('qWrap').appendChild(div);
+    div.querySelector('.delQ').onclick=()=>div.remove();
+  }
+  $('addQ').onclick=addBlock;
+
+  $('quizForm').addEventListener('submit',async e=>{
+    e.preventDefault();
+    $('errBox').style.display='none';$('okBox').style.display='none';
+    const title=$('qzTitle').value.trim(),subject=$('qzSubject').value.trim();
+    const year=$('qzYear').value,dept=$('qzDept').value;
+    if(!title||!subject){$('errBox').textContent='⚠️ اكتب عنوان الاختبار والمادة.';$('errBox').style.display='block';return;}
+    const blocks=[...document.querySelectorAll('#qWrap .qblock')];
+    if(!blocks.length){$('errBox').textContent='⚠️ ضيف سؤال واحد على الأقل.';$('errBox').style.display='block';return;}
+    const questions=[];
+    for(const b of blocks){
+      const q=b.querySelector('.q-text').value.trim();
+      const opts=[...b.querySelectorAll('.q-opt')].map(i=>i.value.trim());
+      const ans=+b.querySelector('.q-ans').value;
+      if(!q||opts.some(o=>!o)){$('errBox').textContent='⚠️ كمّل نص السؤال والـ٤ اختيارات في كل الأسئلة.';$('errBox').style.display='block';return;}
+      questions.push({q,opts,ans});
+    }
+    $('submitQuiz').classList.add('loading');
+    try{
+      await db.collection('quizzes').add({title,subject,year,dept,questions,createdAt:new Date().toISOString()});
+      $('okBox').textContent='✅ الاختبار اتنشر! الطلاب هيلاقوه في صفحة الاختبارات.';
+      $('okBox').style.display='block';
+      $('quizForm').reset();$('qWrap').innerHTML='';addBlock();loadQuizzes();
+    }catch(er){$('errBox').textContent='⚠️ '+((er&&er.message)||er);$('errBox').style.display='block';}
+    finally{$('submitQuiz').classList.remove('loading');}
+  });
+
+  async function loadQuizzes(){
+    const box=$('quizList');
+    try{
+      const snap=await db.collection('quizzes').get();
+      const arr=[];snap.forEach(d=>arr.push(Object.assign({id:d.id},d.data())));
+      if(!arr.length){box.innerHTML='<p class="muted">لسه مفيش اختبارات.</p>';return;}
+      box.innerHTML=arr.map(z=>'<div class="item"><div class="item-top"><b>'+z.title+'</b><span class="st">فرقة '+z.year+' — '+z.dept+'</span></div><p class="item-meta">'+z.questions.length+' سؤال • '+z.subject+'</p><button class="no" data-id="'+z.id+'"><i class="fa-solid fa-trash"></i> حذف</button></div>').join('');
+      box.querySelectorAll('button').forEach(btn=>btn.onclick=async()=>{
+        if(confirm('حذف الاختبار ده؟')){btn.disabled=true;await db.collection('quizzes').doc(btn.dataset.id).delete();loadQuizzes();}
+      });
+    }catch(e){box.innerHTML='<p class="muted">خطأ في التحميل.</p>';}
+  }
+
+  $('logoutBtn').onclick=async()=>{localStorage.removeItem('aea_user');await auth.signOut();location.href='index.html';};
+</script>
+</body>
+</html>

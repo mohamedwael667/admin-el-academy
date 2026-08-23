@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الاختبارات | Admin El Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#050b1e;--line:rgba(255,255,255,.09);--sky:#38bdf8;--gold:#facc15;--text:#eef2ff;--muted:#9fb0ce;--grad:linear-gradient(135deg,#1e3a8a,#2563eb 55%,#38bdf8)}
+body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+.container{max-width:1000px;margin:auto;padding:0 20px}
+.blob{position:fixed;border-radius:50%;filter:blur(95px);opacity:.35;z-index:0}
+.blob-1{width:520px;height:520px;background:radial-gradient(circle,#1d4ed8,transparent 65%);top:-140px;right:-120px}
+.blob-2{width:460px;height:460px;background:radial-gradient(circle,#0e7490,transparent 65%);bottom:-120px;left:-100px}
+.top{position:sticky;top:0;z-index:10;background:rgba(5,11,30,.85);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.top-wrap{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;gap:14px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800}
+.logo img{width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,255,255,.4)}
+.logo b{background:linear-gradient(90deg,#93c5fd,#fde047);-webkit-background-clip:text;color:transparent}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:12px;font-weight:800;font-size:14px;font-family:inherit;cursor:pointer;transition:.3s;border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--text)}
+.btn.danger{color:#fca5a5;border-color:rgba(239,68,68,.35);background:none}
+.btn.primary{width:100%;justify-content:center;padding:14px;border:none;background:var(--grad);color:#fff;box-shadow:0 10px 30px rgba(37,99,235,.4);font-size:16px;margin-top:16px}
+main{position:relative;z-index:1;padding:40px 0 70px}
+.page-head{text-align:center;margin-bottom:26px}
+.page-head h1{font-size:clamp(24px,4vw,38px);font-weight:900}
+.page-head h1 i{color:var(--gold)}
+.page-head p{color:var(--muted);margin-top:8px}
+.filters{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-bottom:24px}
+.filters select{padding:11px 18px;border-radius:12px;background:rgba(255,255,255,.05);border:1px solid var(--line);color:var(--text);font-family:inherit;font-size:14px;font-weight:800;outline:none;cursor:pointer}
+.filters select option{background:#081231}
+.count{text-align:center;color:var(--muted);font-size:13px;font-weight:800;margin-bottom:18px}
+.count b{color:var(--gold)}
+.quizzes{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.qz{border-radius:20px;background:rgba(8,18,49,.6);border:1px solid var(--line);padding:24px;display:flex;flex-direction:column;gap:12px;transition:.35s}
+.qz:hover{transform:translateY(-8px);border-color:rgba(56,189,248,.45)}
+.tag{display:inline-block;font-size:11px;font-weight:800;color:var(--gold);background:rgba(250,204,21,.1);border:1px solid rgba(250,204,21,.35);padding:3px 12px;border-radius:50px}
+.qz h3{font-size:17px;font-weight:800;line-height:1.6}
+.qz-meta{color:var(--muted);font-size:12.5px;font-weight:700;display:flex;gap:14px;flex-wrap:wrap}
+.qz-meta i{color:var(--sky);margin-left:4px}
+.start{margin-top:auto;display:inline-flex;justify-content:center;align-items:center;gap:8px;padding:12px;border-radius:12px;background:var(--grad);color:#fff;font-weight:800;border:none;cursor:pointer;font-family:inherit;font-size:14px;transition:.3s}
+.start:hover{transform:translateY(-2px)}
+.empty{text-align:center;color:var(--muted);padding:50px 0;font-weight:800;display:none}
+.empty i{font-size:40px;color:var(--sky);display:block;margin-bottom:14px}
+.card-glass{background:rgba(8,18,49,.6);backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:24px;padding:28px}
+.card-glass h2{font-size:17px;font-weight:900;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.card-glass h2 i{color:var(--gold)}
+.take-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:20px;flex-wrap:wrap}
+.take-head h2{margin:0}
+.q-item{margin-bottom:24px}
+.q-title{font-weight:800;font-size:15.5px;margin-bottom:12px;line-height:1.7}
+.opt-list{display:flex;flex-direction:column;gap:10px}
+.opt{display:flex;gap:10px;align-items:center;padding:12px 14px;border:1px solid var(--line);border-radius:12px;cursor:pointer;transition:.2s;font-size:14.5px;font-weight:700}
+.opt:hover{border-color:rgba(56,189,248,.5);background:rgba(56,189,248,.06)}
+.opt input{accent-color:#2563eb;width:18px;height:18px;cursor:pointer}
+.alert{display:none;padding:12px 16px;border-radius:12px;margin-top:14px;font-size:14px;font-weight:700}
+.alert.error{background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.45);color:#fca5a5}
+.result{text-align:center;padding:50px 30px}
+.result i{font-size:60px;margin-bottom:16px;display:block}
+.result h2{justify-content:center;font-size:24px}
+.result p{color:var(--muted);font-size:17px;font-weight:800;margin:10px 0 20px}
+.result .btn{margin-inline:auto}
+.list{display:flex;flex-direction:column;gap:12px}
+.item{background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:14px;padding:14px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.st{font-size:12px;font-weight:900;padding:5px 14px;border-radius:50px}
+.st.gold{background:rgba(250,204,21,.12);color:var(--gold);border:1px solid rgba(250,204,21,.4)}
+.st.green{background:rgba(34,197,94,.12);color:#86efac;border:1px solid rgba(34,197,94,.4)}
+.st.red{background:rgba(239,68,68,.12);color:#fca5a5;border:1px solid rgba(239,68,68,.4)}
+.muted{color:var(--muted);font-size:14px}
+.mt{margin-top:26px}
+@media(max-width:760px){.quizzes{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="blob blob-1"></div><div class="blob blob-2"></div>
+
+<header class="top">
+  <div class="container top-wrap">
+    <a href="index.html" class="logo"><img src="logo.png" alt="" onerror="this.style.display='none'"><span>Admin <b>El Academy</b></span></a>
+    <div style="display:flex;gap:10px">
+      <a href="dashboard.html" class="btn"><i class="fa-solid fa-gauge-high"></i> لوحتك</a>
+      <button id="logoutBtn" class="btn danger"><i class="fa-solid fa-right-from-bracket"></i> خروج</button>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+  <section class="page-head">
+    <h1>الاختبارات <i class="fa-solid fa-file-pen"></i></h1>
+    <p>حل الاختبارات واعرف نتيجتك فورًا — نتايجك بتتحفظ في ملفك</p>
+  </section>
+
+  <div id="listView">
+    <div class="filters">
+      <select id="fYear"><option value="">كل الفرق</option><option>الأولى</option><option>الثانية</option><option>الثالثة</option><option>الرابعة</option></select>
+      <select id="fDept"><option value="">كل الأقسام</option><option>نظم ومعلومات إدارية</option><option>إدارة أعمال</option><option>تسويق</option></select>
+    </div>
+    <p class="count">عدد الاختبارات: <b id="count">0</b></p>
+    <div class="quizzes" id="quizCards"></div>
+    <div class="empty" id="empty"><i class="fa-solid fa-file-circle-question"></i>مفيش اختبارات في الاختيار ده حاليًا</div>
+  </div>
+
+  <div id="takeView" style="display:none">
+    <div class="card-glass">
+      <div class="take-head"><h2 id="takeTitle"></h2><button class="btn danger" id="backBtn"><i class="fa-solid fa-arrow-right"></i> رجوع</button></div>
+      <div id="takeBody"></div>
+      <button class="btn primary" id="submitQuizBtn">تصحيح إجاباتي <i class="fa-solid fa-check-double"></i></button>
+      <div class="alert error" id="terr"></div>
+    </div>
+  </div>
+
+  <div id="resultView" style="display:none">
+    <div class="card-glass result">
+      <i id="resIcon"></i>
+      <h2 id="resTitle"></h2>
+      <p id="resScore"></p>
+      <button class="btn" id="againBtn"><i class="fa-solid fa-backward"></i> الرجوع للاختبارات</button>
+    </div>
+  </div>
+
+  <div class="card-glass mt" id="myResultsCard">
+    <h2><i class="fa-solid fa-chart-line"></i> نتائجي</h2>
+    <div id="myResults" class="list"><p class="muted">ثواني بنحمّل…</p></div>
+  </div>
+</main>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="js/config.js"></script>
+<script>
+  const $=id=>document.getElementById(id);
+  let me=null,ALL=[],CURRENT=null;
+
+  auth.onAuthStateChanged(async user=>{
+    if(!user){location.href='login.html';return;}
+    me={uid:user.uid};
+    let d={};try{d=JSON.parse(localStorage.getItem('aea_user')||'{}')}catch(e){}
+    me.name=d.name||user.email.split('@')[0];
+    loadQuizzes();loadResults();
+  });
+
+  async function loadQuizzes(){
+    try{
+      const snap=await db.collection('quizzes').get();
+      ALL=[];snap.forEach(d=>ALL.push(Object.assign({id:d.id},d.data())));
+    }catch(e){console.warn(e)}
+    renderList();
+  }
+
+  function renderList(){
+    const y=$('fYear').value,d=$('fDept').value;
+    const list=ALL.filter(z=>(!y||z.year===y)&&(!d||z.dept===d));
+    $('count').textContent=list.length;
+    $('empty').style.display=list.length?'none':'block';
+    $('quizCards').innerHTML=list.map(z=>`
+      <div class="qz">
+        <span class="tag">${z.subject} — الفرقة ${z.year}</span>
+        <h3>${z.title}</h3>
+        <div class="qz-meta"><span><i class="fa-solid fa-list-check"></i>${z.questions.length} سؤال</span><span><i class="fa-solid fa-layer-group"></i>${z.dept}</span></div>
+        <button class="start" data-id="${z.id}">ابدأ الاختبار <i class="fa-solid fa-pen"></i></button>
+      </div>`).join('');
+    document.querySelectorAll('.start').forEach(b=>b.onclick=()=>startQuiz(b.dataset.id));
+  }
+
+  function startQuiz(id){
+    CURRENT=ALL.find(z=>z.id===id);
+    if(!CURRENT)return;
+    $('takeTitle').textContent=CURRENT.title;
+    $('takeBody').innerHTML=CURRENT.questions.map((q,i)=>`
+      <div class="q-item">
+        <p class="q-title">${i+1}. ${q.q}</p>
+        <div class="opt-list">
+          ${q.opts.map((o,j)=>`<label class="opt"><input type="radio" name="q${i}" value="${j}"><span>${o}</span></label>`).join('')}
+        </div>
+      </div>`).join('');
+    $('terr').style.display='none';
+    $('listView').style.display='none';
+    $('myResultsCard').style.display='none';
+    $('resultView').style.display='none';
+    $('takeView').style.display='block';
+    scrollTo({top:0,behavior:'smooth'});
+  }
+
+  $('submitQuizBtn').onclick=async()=>{
+    if(!CURRENT)return;
+    let score=0,unanswered=0;
+    CURRENT.questions.forEach((q,i)=>{
+      const sel=document.querySelector('input[name="q'+i+'"]:checked');
+      if(!sel){unanswered++;return;}
+      if(+sel.value===q.ans)score++;
+    });
+    if(unanswered){$('terr').textContent='⚠️ فاضل '+unanswered+' سؤال من غير إجابة — جاوب عليهم كلهم الأول.';$('terr').style.display='block';return;}
+    const total=CURRENT.questions.length,percent=Math.round(score/total*100);
+    try{
+      await db.collection('results').add({user_id:me.uid,student:me.name,quizId:CURRENT.id,title:CURRENT.title,score,total,percent,createdAt:new Date().toISOString()});
+    }catch(e){console.warn(e)}
+    $('takeView').style.display='none';
+    $('resultView').style.display='block';
+    const icon=$('resIcon');
+    if(percent>=85){icon.className='fa-solid fa-trophy';icon.style.color='var(--gold)';$('resTitle').textContent='ممتاز! 🏆';}
+    else if(percent>=50){icon.className='fa-solid fa-face-smile';icon.style.color='#86efac';$('resTitle').textContent='جيد جدًا! 👏';}
+    else{icon.className='fa-solid fa-book-open-reader';icon.style.color='#fca5a5';$('resTitle').textContent='محتاج مراجعة شوية 📚';}
+    $('resScore').textContent='نتيجتك: '+score+' من '+total+' ('+percent+'%)';
+    scrollTo({top:0,behavior:'smooth'});
+    loadResults();
+  };
+
+  $('backBtn').onclick=()=>{$('takeView').style.display='none';$('listView').style.display='block';$('myResultsCard').style.display='block';};
+  $('againBtn').onclick=()=>{$('resultView').style.display='none';$('listView').style.display='block';$('myResultsCard').style.display='block';};
+
+  async function loadResults(){
+    const box=$('myResults');
+    try{
+      const snap=await db.collection('results').where('user_id','==',me.uid).get();
+      const arr=[];snap.forEach(d=>arr.push(Object.assign({id:d.id},d.data())));
+      arr.sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
+      if(!arr.length){box.innerHTML='<p class="muted">لسه مفيش نتائج — حل أول اختبار من فوق!</p>';return;}
+      box.innerHTML=arr.map(r=>{
+        const cls=r.percent>=85?'gold':r.percent>=50?'green':'red';
+        return '<div class="item"><div><b>'+r.title+'</b><p class="muted" style="margin:4px 0 0">'+r.score+' من '+r.total+'</p></div><span class="st '+cls+'">'+r.percent+'%</span></div>';
+      }).join('');
+    }catch(e){box.innerHTML='<p class="muted">خطأ في تحميل النتائج.</p>';}
+  }
+
+  $('fYear').onchange=renderList;$('fDept').onchange=renderList;
+  $('logoutBtn').onclick=async()=>{localStorage.removeItem('aea_user');await auth.signOut();location.href='index.html';};
+</script>
+</body>
+</html>

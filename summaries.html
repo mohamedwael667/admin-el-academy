@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الملخصات | Admin El Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#050b1e;--line:rgba(255,255,255,.09);--sky:#38bdf8;--gold:#facc15;--text:#eef2ff;--muted:#9fb0ce;--grad:linear-gradient(135deg,#1e3a8a,#2563eb 55%,#38bdf8)}
+body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+.container{max-width:1150px;margin:auto;padding:0 20px}
+.blob{position:fixed;border-radius:50%;filter:blur(95px);opacity:.35;z-index:0}
+.blob-1{width:520px;height:520px;background:radial-gradient(circle,#1d4ed8,transparent 65%);top:-140px;right:-120px}
+.blob-2{width:460px;height:460px;background:radial-gradient(circle,#0e7490,transparent 65%);bottom:-120px;left:-100px}
+.top{position:sticky;top:0;z-index:10;background:rgba(5,11,30,.85);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.top-wrap{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;gap:14px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800}
+.logo img{width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,255,255,.4)}
+.logo b{background:linear-gradient(90deg,#93c5fd,#fde047);-webkit-background-clip:text;color:transparent}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:12px;font-weight:800;font-size:14px;font-family:inherit;cursor:pointer;transition:.3s;border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--text)}
+.btn:hover{transform:translateY(-2px)}
+.btn.danger{color:#fca5a5;border-color:rgba(239,68,68,.35);background:none}
+main{position:relative;z-index:1;padding:40px 0 70px}
+.page-head{text-align:center;margin-bottom:28px}
+.page-head h1{font-size:clamp(24px,4vw,38px);font-weight:900}
+.page-head h1 i{color:var(--gold)}
+.page-head p{color:var(--muted);margin-top:8px}
+.filters{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-bottom:26px}
+.filters select{padding:11px 18px;border-radius:12px;background:rgba(255,255,255,.05);border:1px solid var(--line);color:var(--text);font-family:inherit;font-size:14px;font-weight:800;outline:none;cursor:pointer}
+.filters select:focus{border-color:#2563eb}
+.filters select option{background:#081231}
+.count{text-align:center;color:var(--muted);font-size:13px;font-weight:800;margin-bottom:18px}
+.count b{color:var(--gold)}
+.sums{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.sum{border-radius:20px;background:rgba(8,18,49,.6);border:1px solid var(--line);padding:22px;transition:.35s;display:flex;flex-direction:column;gap:14px}
+.sum:hover{transform:translateY(-8px);border-color:rgba(250,204,21,.45);box-shadow:0 20px 50px rgba(0,0,0,.45)}
+.sum-top{display:flex;gap:14px;align-items:center}
+.sum-icon{width:58px;height:58px;border-radius:16px;display:grid;place-items:center;background:linear-gradient(135deg,#dc2626,#991b1b);color:#fff;font-size:26px;flex-shrink:0;box-shadow:0 8px 20px rgba(220,38,38,.35)}
+.sum-top h3{font-size:15.5px;font-weight:800;line-height:1.55;flex:1}
+.tag{display:inline-block;font-size:11px;font-weight:800;color:var(--gold);background:rgba(250,204,21,.1);border:1px solid rgba(250,204,21,.35);padding:3px 12px;border-radius:50px;margin-bottom:6px}
+.sum-meta{color:var(--muted);font-size:12.5px;font-weight:700;display:flex;gap:12px;flex-wrap:wrap}
+.sum-meta i{color:var(--sky);margin-left:4px}
+.dl{display:inline-flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:12px;border-radius:12px;background:var(--grad);color:#fff;font-weight:800;font-size:14px;transition:.3s;border:none;cursor:pointer;font-family:inherit;margin-top:auto}
+.dl:hover{transform:translateY(-2px);box-shadow:0 10px 25px rgba(37,99,235,.45)}
+.empty{text-align:center;color:var(--muted);padding:50px 0;font-weight:800;display:none}
+.empty i{font-size:40px;color:var(--sky);display:block;margin-bottom:14px}
+@media(max-width:950px){.sums{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.sums{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="blob blob-1"></div><div class="blob blob-2"></div>
+
+<header class="top">
+  <div class="container top-wrap">
+    <a href="index.html" class="logo"><img src="logo.png" alt="" onerror="this.style.display='none'"><span>Admin <b>El Academy</b></span></a>
+    <div style="display:flex;gap:10px">
+      <a href="dashboard.html" class="btn"><i class="fa-solid fa-gauge-high"></i> لوحتك</a>
+      <button id="logoutBtn" class="btn danger"><i class="fa-solid fa-right-from-bracket"></i> خروج</button>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+  <section class="page-head">
+    <h1>الملخصات <i class="fa-solid fa-file-pdf"></i></h1>
+    <p>كل الملخصات مرتبة بالفرقة والقسم — حمّل اللي محتاجه بضغطة واحدة</p>
+  </section>
+
+  <div class="filters">
+    <select id="fYear">
+      <option value="">كل الفرق</option><option>الأولى</option><option>الثانية</option><option>الثالثة</option><option>الرابعة</option>
+    </select>
+    <select id="fDept">
+      <option value="">كل الأقسام</option><option>نظم ومعلومات إدارية</option><option>إدارة أعمال</option><option>تسويق</option>
+    </select>
+  </div>
+
+  <p class="count">عدد الملخصات المعروضة: <b id="count">0</b></p>
+  <div class="sums" id="sums"></div>
+  <div class="empty" id="empty"><i class="fa-solid fa-folder-open"></i>مفيش ملخصات في الاختيار ده حاليًا</div>
+</main>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="js/config.js"></script>
+<script>
+  auth.onAuthStateChanged(user=>{if(!user)location.href='login.html';});
+  $('logoutBtn').onclick=async()=>{localStorage.removeItem('aea_user');await auth.signOut();location.href='index.html';};
+  function $(id){return document.getElementById(id)}
+
+  let ALL=[];
+  async function load(){
+    try{
+      const snap=await db.collection('summaries').get();
+      ALL=[];
+      snap.forEach(d=>ALL.push(Object.assign({id:d.id},d.data())));
+      ALL.sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
+    }catch(e){console.warn(e);}
+    render();
+  }
+
+  function render(){
+    const y=$('fYear').value,d=$('fDept').value;
+    const list=ALL.filter(s=>(!y||s.year===y)&&(!d||s.dept===d));
+    $('count').textContent=list.length;
+    $('empty').style.display=list.length?'none':'block';
+    $('sums').innerHTML=list.map(s=>`
+      <div class="sum">
+        <div class="sum-top">
+          <div class="sum-icon"><i class="fa-solid fa-file-pdf"></i></div>
+          <div><span class="tag">${s.subject||'مادة'} — الفرقة ${s.year}</span><h3>${s.title}</h3></div>
+        </div>
+        <div class="sum-meta">
+          <span><i class="fa-solid fa-user-doctor"></i>${s.doctor||'—'}</span>
+          <span><i class="fa-solid fa-layer-group"></i>${s.dept}</span>
+        </div>
+        ${s.link?`<a class="dl" href="${s.link}" target="_blank"><i class="fa-solid fa-download"></i> تحميل الملخص</a>`:'<p style="color:#fca5a5;text-align:center;font-size:13px">الرابط غير متاح</p>'}
+      </div>`).join('');
+  }
+
+  $('fYear').onchange=render;
+  $('fDept').onchange=render;
+  load();
+</script>
+</body>
+</html>
