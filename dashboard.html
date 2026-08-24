@@ -1,1 +1,141 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>لوحة الطالب | Admin El Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#050b1e;--line:rgba(255,255,255,.09);--sky:#38bdf8;--gold:#facc15;--text:#eef2ff;--muted:#9fb0ce;--grad:linear-gradient(135deg,#1e3a8a,#2563eb 55%,#38bdf8)}
+body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+.container{max-width:1100px;margin:auto;padding:0 20px}
+.blob{position:fixed;border-radius:50%;filter:blur(95px);opacity:.35;z-index:0}
+.blob-1{width:520px;height:520px;background:radial-gradient(circle,#1d4ed8,transparent 65%);top:-140px;right:-120px}
+.blob-2{width:460px;height:460px;background:radial-gradient(circle,#0e7490,transparent 65%);bottom:-120px;left:-100px}
+.top{position:sticky;top:0;z-index:10;background:rgba(5,11,30,.85);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.top-wrap{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;gap:14px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800}
+.logo img{width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,255,255,.4)}
+.logo b{background:linear-gradient(90deg,#93c5fd,#fde047);-webkit-background-clip:text;color:transparent}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:12px;font-weight:800;font-size:14px;font-family:inherit;cursor:pointer;transition:.3s;border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--text)}
+.btn:hover{transform:translateY(-2px)}
+.btn.danger{color:#fca5a5;border-color:rgba(239,68,68,.35);background:none}
+.btn.danger:hover{background:rgba(239,68,68,.12)}
+main{position:relative;z-index:1;padding:40px 0 70px}
+.welcome{display:flex;align-items:center;gap:22px;padding:30px;border-radius:24px;background:linear-gradient(160deg,rgba(37,99,235,.16),rgba(8,18,49,.6));border:1px solid rgba(59,130,246,.3);margin-bottom:26px;flex-wrap:wrap}
+.avatar{width:86px;height:86px;border-radius:50%;display:grid;place-items:center;font-size:38px;font-weight:900;color:#fff;background:var(--grad);border:3px solid rgba(255,255,255,.85);box-shadow:0 0 0 5px rgba(250,204,21,.2),0 12px 30px rgba(0,0,0,.4)}
+.welcome h1{font-size:clamp(20px,3vw,30px);font-weight:900}
+.muted{color:var(--muted);margin-top:4px;font-size:15px}
+.chips{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.chip{display:inline-flex;align-items:center;gap:7px;padding:7px 14px;border-radius:50px;background:rgba(255,255,255,.05);border:1px solid var(--line);font-size:12px;font-weight:800;color:var(--muted)}
+.chip i{color:var(--gold)}
+.grid{display:grid;grid-template-columns:1fr 1.2fr;gap:26px;align-items:start}
+.card-glass{background:rgba(8,18,49,.6);backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:24px;padding:28px}
+.card-glass h2{font-size:18px;font-weight:900;margin-bottom:18px;display:flex;align-items:center;gap:10px}
+.card-glass h2 i{color:var(--gold)}
+.profile ul{list-style:none}
+.profile li{display:flex;justify-content:space-between;gap:12px;padding:12px 4px;border-bottom:1px dashed var(--line);font-size:14.5px;flex-wrap:wrap}
+.profile li:last-child{border-bottom:none}
+.profile li span{color:var(--muted);font-weight:700}
+.profile li b{font-weight:800}
+.acts{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.act{position:relative;display:flex;flex-direction:column;align-items:center;gap:8px;padding:22px 12px;border-radius:18px;background:rgba(255,255,255,.04);border:1px solid var(--line);transition:.35s;text-align:center}
+.act i{font-size:26px;color:var(--sky)}
+.act b{font-size:15px}
+.act small{color:var(--muted);font-size:11px;font-weight:700;background:rgba(255,255,255,.06);padding:3px 10px;border-radius:50px}
+.act:hover{transform:translateY(-6px);border-color:rgba(56,189,248,.5)}
+.act.gold i{color:var(--gold)}
+@media(max-width:900px){.grid{grid-template-columns:1fr}}
+@media(max-width:520px){.welcome{padding:22px}}
+</style>
+</head>
+<body>
+<div class="blob blob-1"></div><div class="blob blob-2"></div>
 
+<header class="top">
+  <div class="container top-wrap">
+    <a href="index.html" class="logo"><img src="logo.png" alt="" onerror="this.style.display='none'"><span>Admin <b>El Academy</b></span></a>
+    <div style="display:flex;gap:10px">
+      <a href="index.html" class="btn"><i class="fa-solid fa-house"></i> الرئيسية</a>
+      <button id="logoutBtn" class="btn danger"><i class="fa-solid fa-right-from-bracket"></i> خروج</button>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+  <section class="welcome">
+    <div class="avatar" id="avatar">…</div>
+    <div>
+      <h1 id="wName">ثواني بنجهز لوحتك…</h1>
+      <p class="muted" id="wSub"></p>
+      <div class="chips">
+        <span class="chip"><i class="fa-solid fa-shield-halved"></i> حساب موثق</span>
+        <span class="chip"><i class="fa-solid fa-database"></i> بياناتك محفوظة بأمان في Firebase</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="grid">
+    <div class="card-glass profile">
+      <h2><i class="fa-solid fa-id-card"></i> بياناتك الشخصية</h2>
+      <ul>
+        <li><span>الاسم الكامل</span><b id="pName">—</b></li>
+        <li><span>البريد الإلكتروني</span><b id="pEmail">—</b></li>
+        <li><span>رقم الموبايل</span><b id="pPhone">—</b></li>
+        <li><span>القسم</span><b id="pDept">—</b></li>
+        <li><span>الفرقة</span><b id="pYear">—</b></li>
+        <li><span>تاريخ الانضمام</span><b id="pDate">—</b></li>
+      </ul>
+    </div>
+
+    <div class="card-glass">
+      <h2><i class="fa-solid fa-compass"></i> ابدأ التعلم</h2>
+      <div class="acts">
+<a class="act" href="lectures.html"><i class="fa-solid fa-video"></i><b>المحاضرات</b><small>متاح دلوقتي</small></a>
+<a class="act" href="summaries.html"><i class="fa-solid fa-book-open"></i><b>الملخصات</b><small>متاح دلوقتي</small></a>        <a class="act" href="#"><i class="fa-solid fa-circle-question"></i><b>بنك الأسئلة</b><small>قريبًا</small></a>
+        <a class="act" href="quizzes.html"><i class="fa-solid fa-circle-question"></i><b>بنك الأسئلة</b><small>متاح دلوقتي</small></a>
+        <a class="act" href="quizzes.html"><i class="fa-solid fa-file-pen"></i><b>الاختبارات</b><small>متاح دلوقتي</small></a>
+        <a class="act gold" href="booking.html"><i class="fa-solid fa-calendar-check"></i><b>حجز دكتور</b><small>متاح دلوقتي</small></a>      </div>
+    </div>
+  </section>
+</main>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="js/config.js"></script>
+<script>
+  const $=id=>document.getElementById(id);
+
+  auth.onAuthStateChanged(async user=>{
+    if(!user){location.href='login.html';return;}
+    let data={};
+    try{data=JSON.parse(localStorage.getItem('aea_user')||'{}')}catch(e){}
+    try{
+      const snap=await db.collection('profiles').doc(user.uid).get();
+      if(snap.exists)Object.assign(data,snap.data());
+    }catch(e){console.warn(e)}
+
+    const name=data.name||user.email.split('@')[0];
+    $('avatar').textContent=name.trim().charAt(0);
+    $('wName').textContent='أهلاً، '+name+' 👋';
+    $('wSub').textContent=(data.dept?'قسم '+data.dept:'')+(data.year?' — الفرقة '+data.year:'');
+    $('pName').textContent=data.name||'—';
+    $('pEmail').textContent=data.email||user.email;
+    $('pPhone').textContent=data.phone||'—';
+    $('pDept').textContent=data.dept||'—';
+    $('pYear').textContent=data.year||'—';
+    $('pDate').textContent=data.createdAt?new Date(data.createdAt).toLocaleDateString('ar-EG',{year:'numeric',month:'long',day:'numeric'}):'—';
+  });
+
+  $('logoutBtn').onclick=async()=>{
+    localStorage.removeItem('aea_user');
+    await auth.signOut();
+    location.href='index.html';
+  };
+</script>
+</body>
+</html>
