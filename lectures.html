@@ -169,6 +169,18 @@ main{position:relative;z-index:1;padding:40px 0 70px}
       $('modal').classList.add('open');
     });
   }
+  // قراءة الفلاتر من الرابط (لما حد يدوس "اكتشف القسم" أو "الفرقة" من الصفحة الرئيسية)
+  const params=new URLSearchParams(location.search);
+  const urlDept=params.get('dept'),urlYear=params.get('year');
+  if(urlDept){
+    const opt=[...$('fDept').options].find(o=>o.value===urlDept);
+    if(opt)$('fDept').value=urlDept;
+  }
+  if(urlYear){
+    const opt=[...$('fYear').options].find(o=>o.value===urlYear);
+    if(opt)$('fYear').value=urlYear;
+  }
+
   $('fYear').onchange=render;$('fDept').onchange=render;
   $('mClose').onclick=()=>{$('modal').classList.remove('open');$('mFrame').src='';};
   $('modal').onclick=e=>{if(e.target.id==='modal'){$('modal').classList.remove('open');$('mFrame').src='';}};
