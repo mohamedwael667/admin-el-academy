@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>أخبار المعهد | Admin El Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#050b1e;--line:rgba(255,255,255,.09);--sky:#38bdf8;--gold:#facc15;--text:#eef2ff;--muted:#9fb0ce;--grad:linear-gradient(135deg,#1e3a8a,#2563eb 55%,#38bdf8)}
+body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+.container{max-width:850px;margin:auto;padding:0 20px}
+.blob{position:fixed;border-radius:50%;filter:blur(95px);opacity:.35;z-index:0}
+.blob-1{width:520px;height:520px;background:radial-gradient(circle,#1d4ed8,transparent 65%);top:-140px;right:-120px}
+.blob-2{width:460px;height:460px;background:radial-gradient(circle,#0e7490,transparent 65%);bottom:-120px;left:-100px}
+.top{position:sticky;top:0;z-index:10;background:rgba(5,11,30,.85);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.top-wrap{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;gap:14px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800}
+.logo img{width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,255,255,.4)}
+.logo b{background:linear-gradient(90deg,#93c5fd,#fde047);-webkit-background-clip:text;color:transparent}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:12px;font-weight:800;font-size:14px;font-family:inherit;cursor:pointer;transition:.3s;border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--text)}
+.btn.danger{color:#fca5a5;border-color:rgba(239,68,68,.35);background:none}
+main{position:relative;z-index:1;padding:40px 0 70px}
+.page-head{text-align:center;margin-bottom:34px}
+.page-head h1{font-size:clamp(24px,4vw,38px);font-weight:900}
+.page-head h1 i{color:var(--gold)}
+.page-head p{color:var(--muted);margin-top:8px}
+.news-list{display:flex;flex-direction:column;gap:22px}
+.news{border-radius:22px;overflow:hidden;background:rgba(8,18,49,.6);border:1px solid var(--line);transition:.35s}
+.news:hover{border-color:rgba(56,189,248,.4);transform:translateY(-4px)}
+.news img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block}
+.news-body{padding:26px}
+.news-date{color:var(--muted);font-size:12px;font-weight:800;display:flex;gap:8px;align-items:center;margin-bottom:10px}
+.news-date i{color:var(--gold)}
+.news h3{font-size:19px;font-weight:900;margin-bottom:10px;line-height:1.7}
+.news p{color:var(--muted);line-height:2.1;font-size:15px;white-space:pre-line}
+.empty{text-align:center;color:var(--muted);padding:60px 0;font-weight:800;display:none}
+.empty i{font-size:50px;color:var(--sky);display:block;margin-bottom:14px}
+</style>
+</head>
+<body>
+<div class="blob blob-1"></div><div class="blob blob-2"></div>
+
+<header class="top">
+  <div class="container top-wrap">
+    <a href="index.html" class="logo"><img src="logo.png" alt="" onerror="this.style.display='none'"><span>Admin <b>El Academy</b></span></a>
+    <div style="display:flex;gap:10px">
+      <a href="dashboard.html" class="btn"><i class="fa-solid fa-gauge-high"></i> لوحتك</a>
+      <button id="logoutBtn" class="btn danger"><i class="fa-solid fa-right-from-bracket"></i> خروج</button>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+  <section class="page-head">
+    <h1>أخبار المعهد <i class="fa-solid fa-bullhorn"></i></h1>
+    <p>آخر الأخبار والإعلانات الرسمية من المعهد</p>
+  </section>
+  <div class="news-list" id="newsList"></div>
+  <div class="empty" id="empty"><i class="fa-solid fa-newspaper"></i>مفيش أخبار حاليًا — تابعنا قريبًا</div>
+</main>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="js/config.js"></script>
+<script>
+  const $=id=>document.getElementById(id);
+  auth.onAuthStateChanged(user=>{
+    if(!user){location.href='login.html';return;}
+    load();
+  });
+
+  async function load(){
+    try{
+      const snap=await db.collection('news').get();
+      const arr=[];snap.forEach(d=>arr.push(d.data()));
+      arr.sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
+      if(!arr.length){$('empty').style.display='block';}
+      else{
+        $('newsList').innerHTML=arr.map(n=>`
+          <article class="news">
+            ${n.image?`<img src="${n.image}" alt="" onerror="this.style.display='none'">`:''}
+            <div class="news-body">
+              <div class="news-date"><i class="fa-solid fa-calendar-day"></i>${new Date(n.createdAt).toLocaleDateString('ar-EG',{weekday:'long',year:'numeric',month:'long',day:'numeric'})}</div>
+              <h3>${n.title}</h3>
+              <p>${n.content}</p>
+            </div>
+          </article>`).join('');
+      }
+      // علّم كل الأخبار كمقروءة (الجرس هيختفي)
+      localStorage.setItem('aea_lastNewsRead',String(Date.now()));
+    }catch(e){$('empty').style.display='block';}
+  }
+
+  $('logoutBtn').onclick=async()=>{localStorage.removeItem('aea_user');await auth.signOut();location.href='index.html';};
+</script>
+</body>
+</html>
