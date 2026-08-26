@@ -118,7 +118,6 @@ img{-webkit-user-drag:none}
 .chip{display:inline-flex;align-items:center;gap:8px;padding:8px 18px;border-radius:50px;background:rgba(255,255,255,.04);border:1px solid var(--line);font-size:13px;font-weight:800;color:var(--muted);backdrop-filter:blur(8px)}
 .chip i{color:var(--gold)}
 @keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
-/* شعار الهيرو */
 .hero-visual{position:relative;display:grid;place-items:center;animation:fadeUp 1s .4s both}
 .seal{width:min(400px,86%);aspect-ratio:1;border-radius:50%;padding:16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.16);backdrop-filter:blur(12px);display:grid;place-items:center;box-shadow:0 30px 90px rgba(2,8,40,.85),0 0 90px rgba(37,99,235,.3);animation:float 7s ease-in-out infinite;position:relative;z-index:2}
 .seal img{width:100%;height:100%;border-radius:50%;object-fit:cover;border:5px solid rgba(255,255,255,.92);box-shadow:0 0 0 6px rgba(250,204,21,.25),0 20px 50px rgba(0,0,0,.5)}
@@ -275,40 +274,6 @@ footer{background:#03081a;border-top:1px solid var(--line);padding-top:70px}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
-  <script>
-(function(){
-  if(!localStorage.getItem('aea_user'))return;
-  const last=+(localStorage.getItem('aea_lastNewsRead')||0);
-  const st=document.createElement('style');
-  st.textContent='#newsBell{position:fixed;bottom:28px;right:28px;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#1e3a8a,#2563eb 55%,#38bdf8);color:#fff;display:grid;place-items:center;font-size:20px;cursor:pointer;z-index:950;box-shadow:0 10px 30px rgba(37,99,235,.5);border:none;transition:.3s}#newsBell:hover{transform:translateY(-4px)}#newsBell .badge{position:absolute;top:-4px;left:-4px;min-width:22px;height:22px;border-radius:50px;background:#ef4444;color:#fff;font-size:12px;font-weight:900;display:none;place-items:center;padding:0 6px;border:2px solid #050b1e}#newsToast{position:fixed;bottom:96px;right:28px;max-width:320px;background:rgba(8,18,49,.95);border:1px solid rgba(250,204,21,.4);border-radius:16px;padding:14px 18px;z-index:950;box-shadow:0 20px 50px rgba(0,0,0,.5);display:none;cursor:pointer}#newsToast b{color:#facc15;font-size:14px;display:block;margin-bottom:4px}#newsToast p{color:#eef2ff;font-size:13px;font-weight:700}';
-  document.head.appendChild(st);
-  const bell=document.createElement('button');bell.id='newsBell';
-  bell.innerHTML='<i class="fa-solid fa-bell"></i><span class="badge">0</span>';
-  document.body.appendChild(bell);
-  bell.onclick=()=>{location.href='news.html';};
-  const toast=document.createElement('div');toast.id='newsToast';
-  document.body.appendChild(toast);
-  toast.onclick=()=>{location.href='news.html';};
-  if(typeof firebase!=='undefined'&&firebase.firestore){
-    firebase.firestore().collection('news').get().then(snap=>{
-      let unread=0,latest=null;
-      snap.forEach(d=>{
-        const n=d.data(),t=new Date(n.createdAt).getTime();
-        if(t>last){unread++;if(!latest||t>new Date(latest.createdAt).getTime())latest=n;}
-      });
-      if(unread>0){
-        const b=bell.querySelector('.badge');
-        b.style.display='grid';b.textContent=unread;
-        if(latest){
-          toast.innerHTML='<b>📢 خبر جديد من المعهد</b><p>'+latest.title+'</p>';
-          toast.style.display='block';
-          setTimeout(()=>{toast.style.display='none';},8000);
-        }
-      }
-    }).catch(()=>{});
-  }
-})();
-</script>
 <body>
 
 <!-- اللودر -->
@@ -346,7 +311,7 @@ footer{background:#03081a;border-top:1px solid var(--line);padding-top:70px}
       <a href="#departments">الأقسام</a>
       <a href="#years">الفرق</a>
       <a href="#booking">الحجوزات</a>
-      <a href="#stats">إحصائيات</a>
+      <a href="news.html">أخبار المعهد</a>
     </nav>
     <div class="nav-actions">
       <div class="live-counter" id="liveCounter" style="display:none">
@@ -555,6 +520,7 @@ footer{background:#03081a;border-top:1px solid var(--line);padding-top:70px}
         <a href="#departments"><i class="fa-solid fa-chevron-left"></i> الأقسام</a>
         <a href="#years"><i class="fa-solid fa-chevron-left"></i> الفرق</a>
         <a href="#booking"><i class="fa-solid fa-chevron-left"></i> الحجوزات</a>
+        <a href="news.html"><i class="fa-solid fa-chevron-left"></i> أخبار المعهد</a>
       </div>
       <div class="f-links">
         <h4>خدماتنا</h4>
@@ -580,14 +546,14 @@ footer{background:#03081a;border-top:1px solid var(--line);padding-top:70px}
 
 <button id="backTop" aria-label="للأعلى"><i class="fa-solid fa-arrow-up"></i></button>
 
-<!-- Firebase SDK عشان العداد -->
+<!-- Firebase SDK -->
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script src="js/config.js"></script>
 
 <script>
-// شعار بديل تلقائي لو صورة اللوجو مش موجودة
+// شعار بديل تلقائي
 const LOGO_FALLBACK="data:image/svg+xml,"+encodeURIComponent("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='49' fill='#0a2f9e'/><circle cx='50' cy='50' r='42' fill='none' stroke='#fff' stroke-width='2.5'/><text x='50' y='64' font-family='Arial' font-size='42' font-weight='bold' text-anchor='middle' fill='#fff'>A</text></svg>");
 document.querySelectorAll('img[data-fallback]').forEach(im=>im.addEventListener('error',()=>{im.src=LOGO_FALLBACK},{once:true}));
 
@@ -608,7 +574,7 @@ const hamburger=document.getElementById('hamburger'),navLinks=document.getElemen
 hamburger.onclick=()=>{navLinks.classList.toggle('open');hamburger.classList.toggle('active')};
 navLinks.querySelectorAll('a').forEach(a=>a.onclick=()=>{navLinks.classList.remove('open');hamburger.classList.remove('active')});
 
-// الشريط المتحرك (تكرار المحتوى)
+// الشريط المتحرك
 const track=document.getElementById('tickerTrack');
 track.innerHTML+=track.innerHTML;
 
@@ -660,43 +626,22 @@ document.querySelectorAll('.card').forEach(c=>c.addEventListener('mousemove',e=>
 (function(){
   const counter=document.getElementById('liveCounter');
   const countEl=document.getElementById('onlineCount');
-  
   if(typeof firebase !== 'undefined' && firebase.firestore){
     const db=firebase.firestore();
     const presenceRef=db.collection('presence');
     const sessionId='session_'+Date.now()+'_'+Math.random().toString(36).substr(2,9);
     const userRef=presenceRef.doc(sessionId);
-    
-    userRef.set({
-      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-      lastActive: Date.now()
-    }).then(()=>{
-      counter.style.display='inline-flex';
-    }).catch(e=>{
-      console.warn('Presence error:',e);
-      counter.style.display='inline-flex';
-      countEl.textContent=Math.floor(Math.random()*20)+5;
-    });
-    
-    setInterval(()=>{
-      userRef.update({lastActive:Date.now()}).catch(()=>{});
-    },60000);
-    
-    window.addEventListener('beforeunload',()=>{
-      userRef.delete().catch(()=>{});
-    });
-    
+    userRef.set({timestamp: firebase.firestore.FieldValue.serverTimestamp(),lastActive: Date.now()})
+      .then(()=>{counter.style.display='inline-flex';})
+      .catch(()=>{counter.style.display='inline-flex';countEl.textContent=Math.floor(Math.random()*20)+5;});
+    setInterval(()=>{userRef.update({lastActive:Date.now()}).catch(()=>{});},60000);
+    window.addEventListener('beforeunload',()=>{userRef.delete().catch(()=>{});});
     function updateCount(){
       const tenMinutesAgo=Date.now()-(10*60*1000);
       presenceRef.where('lastActive','>=',tenMinutesAgo).get()
-        .then(snap=>{
-          countEl.textContent=snap.size;
-        })
-        .catch(()=>{
-          countEl.textContent=Math.floor(Math.random()*15)+3;
-        });
+        .then(snap=>{countEl.textContent=snap.size;})
+        .catch(()=>{countEl.textContent=Math.floor(Math.random()*15)+3;});
     }
-    
     updateCount();
     setInterval(updateCount,30000);
   }else{
@@ -725,6 +670,42 @@ document.querySelectorAll('.card').forEach(c=>c.addEventListener('mousemove',e=>
   document.querySelectorAll('a[href="login.html"]').forEach(a=>a.style.display='none');
   const lb=document.getElementById('logoutBtn');
   if(lb)lb.onclick=()=>{localStorage.removeItem('aea_user');location.reload();};
+})();
+</script>
+
+<!-- جرس الأخبار -->
+<script>
+(function(){
+  if(!localStorage.getItem('aea_user'))return;
+  const last=+(localStorage.getItem('aea_lastNewsRead')||0);
+  const st=document.createElement('style');
+  st.textContent='#newsBell{position:fixed;bottom:28px;right:28px;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#1e3a8a,#2563eb 55%,#38bdf8);color:#fff;display:grid;place-items:center;font-size:20px;cursor:pointer;z-index:950;box-shadow:0 10px 30px rgba(37,99,235,.5);border:none;transition:.3s}#newsBell:hover{transform:translateY(-4px)}#newsBell .badge{position:absolute;top:-4px;left:-4px;min-width:22px;height:22px;border-radius:50px;background:#ef4444;color:#fff;font-size:12px;font-weight:900;display:none;place-items:center;padding:0 6px;border:2px solid #050b1e}#newsToast{position:fixed;bottom:96px;right:28px;max-width:320px;background:rgba(8,18,49,.95);border:1px solid rgba(250,204,21,.4);border-radius:16px;padding:14px 18px;z-index:950;box-shadow:0 20px 50px rgba(0,0,0,.5);display:none;cursor:pointer}#newsToast b{color:#facc15;font-size:14px;display:block;margin-bottom:4px}#newsToast p{color:#eef2ff;font-size:13px;font-weight:700}';
+  document.head.appendChild(st);
+  const bell=document.createElement('button');bell.id='newsBell';
+  bell.innerHTML='<i class="fa-solid fa-bell"></i><span class="badge">0</span>';
+  document.body.appendChild(bell);
+  bell.onclick=()=>{location.href='news.html';};
+  const toast=document.createElement('div');toast.id='newsToast';
+  document.body.appendChild(toast);
+  toast.onclick=()=>{location.href='news.html';};
+  if(typeof firebase!=='undefined'&&firebase.firestore){
+    firebase.firestore().collection('news').get().then(snap=>{
+      let unread=0,latest=null;
+      snap.forEach(d=>{
+        const n=d.data(),t=new Date(n.createdAt).getTime();
+        if(t>last){unread++;if(!latest||t>new Date(latest.createdAt).getTime())latest=n;}
+      });
+      if(unread>0){
+        const b=bell.querySelector('.badge');
+        b.style.display='grid';b.textContent=unread;
+        if(latest){
+          toast.innerHTML='<b>📢 خبر جديد من المعهد</b><p>'+latest.title+'</p>';
+          toast.style.display='block';
+          setTimeout(()=>{toast.style.display='none';},8000);
+        }
+      }
+    }).catch(()=>{});
+  }
 })();
 </script>
 </body>
