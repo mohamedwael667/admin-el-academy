@@ -3,45 +3,52 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>نشر الأخبار | Admin El Academy</title>
+<title>نشر الأخبار | منصة بن وائل التعليمية</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--bg:#050b1e;--line:rgba(255,255,255,.09);--gold:#facc15;--text:#eef2ff;--muted:#9fb0ce;--grad:linear-gradient(135deg,#1e3a8a,#2563eb 55%,#38bdf8)}
-body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+:root{--bg:#f6f7fb;--card:#fff;--line:#e6e9f0;--text:#101828;--muted:#667085;--orange:#ea580c;--amber:#f59e0b;--grad:linear-gradient(135deg,#f59e0b,#ea580c);--shadow:0 10px 30px rgba(16,24,40,.08)}
+body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
 a{text-decoration:none;color:inherit}
 .container{max-width:800px;margin:auto;padding:0 20px}
-.top{position:sticky;top:0;z-index:10;background:rgba(5,11,30,.85);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
-.top-wrap{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;gap:14px;flex-wrap:wrap}
-.logo{display:flex;align-items:center;gap:10px;font-weight:800}
-.logo img{width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,255,255,.4)}
-.logo b{background:linear-gradient(90deg,#93c5fd,#fde047);-webkit-background-clip:text;color:transparent}
-.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:12px;font-weight:800;font-size:14px;font-family:inherit;cursor:pointer;transition:.3s;border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--text)}
-.btn.danger{color:#fca5a5;border-color:rgba(239,68,68,.35);background:none}
-.btn.primary{width:100%;justify-content:center;padding:14px;border:none;background:var(--grad);color:#fff;box-shadow:0 10px 30px rgba(37,99,235,.4);font-size:15px}
+.top{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.88);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.top-wrap{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;gap:14px;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:10px;font-weight:900;font-size:18px}
+.logo img{width:46px;height:46px;object-fit:contain}
+.logo b{background:var(--grad);-webkit-background-clip:text;color:transparent}
+.top-actions{display:flex;align-items:center;gap:10px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:12px;font-weight:900;font-size:14px;font-family:inherit;cursor:pointer;transition:.3s;border:none}
+.btn-ghost{background:#fff;border:1.5px solid var(--line);color:var(--text)}
+.btn-ghost:hover{border-color:var(--amber);color:var(--orange)}
+.btn-danger{background:#fff;border:1.5px solid #fecaca;color:#b91c1c}
+.btn-danger:hover{background:#fef2f2}
+.btn-primary{width:100%;justify-content:center;padding:14px;background:var(--grad);color:#fff;box-shadow:0 10px 25px rgba(234,88,12,.3);font-size:15px}
+.btn-primary:hover{transform:translateY(-3px)}
 main{position:relative;z-index:1;padding:40px 0 70px}
 .page-head{text-align:center;margin-bottom:28px}
 .page-head h1{font-size:clamp(22px,4vw,34px);font-weight:900}
-.page-head h1 i{color:var(--gold)}
-.card-glass{background:rgba(8,18,49,.6);backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:24px;padding:26px}
+.page-head h1 i{color:var(--orange)}
+.card-glass{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:26px;box-shadow:var(--shadow)}
 .card-glass h2{font-size:17px;font-weight:900;margin-bottom:16px;display:flex;align-items:center;gap:10px}
-.card-glass h2 i{color:var(--gold)}
+.card-glass h2 i{color:var(--orange)}
 .alert{display:none;padding:12px 16px;border-radius:12px;margin-bottom:14px;font-size:14px;font-weight:700}
-.alert.error{background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.45);color:#fca5a5}
-.alert.success{background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.45);color:#86efac}
+.alert.error{background:#fef2f2;border:1px solid #fecaca;color:#b42318}
+.alert.success{background:#ecfdf3;border:1px solid #abefc6;color:#067647}
 .field{margin-bottom:12px;text-align:right}
-.field label{display:block;font-weight:800;font-size:12.5px;margin-bottom:5px;color:#c9d4ea}
-.field input,.field textarea{width:100%;padding:12px 14px;border-radius:12px;background:rgba(255,255,255,.05);border:1px solid var(--line);color:var(--text);font-family:inherit;font-size:14.5px;outline:none;resize:vertical}
-.field input:focus,.field textarea:focus{border-color:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,.22)}
+.field label{display:block;font-weight:800;font-size:12.5px;margin-bottom:5px;color:#344054}
+.field input,.field textarea{width:100%;padding:12px 14px;border-radius:12px;background:#fff;border:1.5px solid var(--line);color:var(--text);font-family:inherit;font-size:14.5px;outline:none;resize:vertical}
+.field input:focus,.field textarea:focus{border-color:var(--amber);box-shadow:0 0 0 4px rgba(245,158,11,.12)}
 .list{display:flex;flex-direction:column;gap:12px}
-.item{background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:14px;padding:14px}
-.item-top{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:6px;align-items:center}
+.item{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.item-top{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:4px;align-items:center}
+.item-top b{font-size:15px;font-weight:900}
 .item-meta{color:var(--muted);font-size:12.5px;font-weight:700;margin-bottom:10px}
-.no{border-radius:10px;padding:7px 14px;font-family:inherit;font-size:12px;font-weight:800;cursor:pointer;background:none;border:1px solid rgba(239,68,68,.35);color:#fca5a5}
+.no{border-radius:10px;padding:7px 14px;font-family:inherit;font-size:12px;font-weight:900;cursor:pointer;background:none;border:1.5px solid #fecaca;color:#b91c1c}
+.no:hover{background:#fef2f2}
 .muted{color:var(--muted);font-size:14px}
 .mt{margin-top:26px}
-.spinner{display:none;width:18px;height:18px;border:3px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite}
+.spinner{display:none;width:18px;height:18px;border:3px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite}
 .btn.loading .spinner{display:inline-block}.btn.loading{pointer-events:none;opacity:.8}
 @keyframes spin{to{transform:rotate(360deg)}}
 </style>
@@ -49,24 +56,15 @@ main{position:relative;z-index:1;padding:40px 0 70px}
 <body>
 <header class="top">
   <div class="container top-wrap">
-    <a href="index.html" class="logo"><img src="logo.png" alt="" onerror="this.style.display='none'"><span>Admin <b>El Academy</b></span></a>
-    <div style="display:flex;gap:10px;flex-wrap:wrap">
-      <a href="admin.html" class="btn"><i class="fa-solid fa-gauge-high"></i> لوحة الأدمن</a>
-      <button id="logoutBtn" class="btn danger"><i class="fa-solid fa-right-from-bracket"></i> خروج</button>
+    <a href="index.html" class="logo"><img src="logo.png" alt="بن وائل" onerror="this.style.display='none'"><span>منصة <b>بن وائل</b></span></a>
+    <div class="top-actions">
+      <a href="admin.html" class="btn btn-ghost"><i class="fa-solid fa-gauge-high"></i> لوحة الأدمن</a>
+      <button id="logoutBtn" class="btn btn-danger"><i class="fa-solid fa-right-from-bracket"></i> خروج</button>
     </div>
   </div>
 </header>
-
 <main class="container">
-  <section class="page-head">
-    <h1>نشر خبر جديد <i class="fa-solid fa-bullhorn"></i></h1>
-  </section>
-
-  <div class="card-glass" id="noAccess" style="display:none;text-align:center;padding:50px">
-    <i class="fa-solid fa-lock" style="font-size:44px;color:var(--gold);margin-bottom:16px;display:block"></i>
-    <h2 style="justify-content:center">مفيش صلاحية أدمن</h2>
-  </div>
-
+  <section class="page-head"><h1>نشر خبر جديد <i class="fa-solid fa-bullhorn"></i></h1></section>
   <div id="adminArea">
     <div class="card-glass">
       <h2><i class="fa-solid fa-circle-plus"></i> خبر جديد</h2>
@@ -76,56 +74,40 @@ main{position:relative;z-index:1;padding:40px 0 70px}
         <div class="field"><label>عنوان الخبر</label><input id="nTitle" placeholder="مثال: إعلان جدول امتحانات الفصل الدراسي الأول"></div>
         <div class="field"><label>نص الخبر</label><textarea id="nContent" rows="5" placeholder="اكتب تفاصيل الخبر هنا..."></textarea></div>
         <div class="field"><label>صورة الخبر (اختياري — رابط من Google Drive)</label><input id="nImage" dir="ltr" placeholder="https://drive.google.com/..."></div>
-        <button class="btn primary" id="submitNews" type="submit"><span>نشر الخبر <i class="fa-solid fa-paper-plane"></i></span><span class="spinner"></span></button>
+        <button class="btn btn-primary" id="submitNews" type="submit"><span>نشر الخبر <i class="fa-solid fa-paper-plane"></i></span><span class="spinner"></span></button>
       </form>
     </div>
-
     <div class="card-glass mt">
       <h2><i class="fa-solid fa-newspaper"></i> الأخبار المنشورة</h2>
       <div id="newsList" class="list"><p class="muted">ثواني بنحمّل…</p></div>
     </div>
   </div>
 </main>
-
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script src="js/config.js"></script>
 <script>
-  const ADMIN_EMAIL="admin@academy.com";
+  const ADMIN_EMAIL="admin@benwael.com";
   const $=id=>document.getElementById(id);
-
   auth.onAuthStateChanged(user=>{
     if(!user){location.href='login.html';return;}
-    if(user.email!==ADMIN_EMAIL){$('adminArea').style.display='none';$('noAccess').style.display='block';return;}
+    if(user.email!==ADMIN_EMAIL){$('adminArea').innerHTML='<div style="text-align:center;padding:60px"><i class="fa-solid fa-lock" style="font-size:44px;color:var(--amber);display:block;margin-bottom:16px"></i><h2>مفيش صلاحية أدمن</h2></div>';return;}
     loadNews();
   });
-
-  function toImg(u){
-    if(!u)return'';
-    if(u.includes('drive.google.com')){
-      const m=u.match(/\/d\/([\w-]+)/)||u.match(/[?&]id=([\w-]+)/);
-      if(m)return 'https://lh3.googleusercontent.com/d/'+m[1];
-    }
-    return u;
-  }
-
+  function toImg(u){if(!u)return'';if(u.includes('drive.google.com')){const m=u.match(/\/d\/([\w-]+)/)||u.match(/[?&]id=([\w-]+)/);if(m)return'https://lh3.googleusercontent.com/d/'+m[1];}return u;}
   $('newsForm').addEventListener('submit',async e=>{
-    e.preventDefault();
-    $('errBox').style.display='none';$('okBox').style.display='none';
-    const title=$('nTitle').value.trim(),content=$('nContent').value.trim();
-    const image=toImg($('nImage').value.trim());
+    e.preventDefault();$('errBox').style.display='none';$('okBox').style.display='none';
+    const title=$('nTitle').value.trim(),content=$('nContent').value.trim(),image=toImg($('nImage').value.trim());
     if(!title||!content){$('errBox').textContent='⚠️ اكتب عنوان الخبر ونصه.';$('errBox').style.display='block';return;}
     $('submitNews').classList.add('loading');
     try{
       await db.collection('news').add({title,content,image,createdAt:new Date().toISOString()});
-      $('okBox').textContent='✅ الخبر اتنشر! الطلاب هيظهرلهم الجرس والإشعار دلوقتي.';
-      $('okBox').style.display='block';
+      $('okBox').textContent='✅ الخبر اتنشر! الطلاب هيظهرلهم الجرس والإشعار دلوقتي.';$('okBox').style.display='block';
       $('newsForm').reset();loadNews();
     }catch(er){$('errBox').textContent='⚠️ '+((er&&er.message)||er);$('errBox').style.display='block';}
     finally{$('submitNews').classList.remove('loading');}
   });
-
   async function loadNews(){
     const box=$('newsList');
     try{
@@ -133,16 +115,11 @@ main{position:relative;z-index:1;padding:40px 0 70px}
       const arr=[];snap.forEach(d=>arr.push(Object.assign({id:d.id},d.data())));
       arr.sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
       if(!arr.length){box.innerHTML='<p class="muted">لسه مفيش أخبار منشورة.</p>';return;}
-      box.innerHTML=arr.map(n=>'<div class="item"><div class="item-top"><b>'+n.title+'</b></div>'+
-        '<p class="item-meta">'+new Date(n.createdAt).toLocaleDateString('ar-EG',{day:'numeric',month:'long',year:'numeric'})+(n.image?' • 📷 بصورة':'')+'</p>'+
-        '<button class="no" data-id="'+n.id+'"><i class="fa-solid fa-trash"></i> حذف</button></div>').join('');
-      box.querySelectorAll('button').forEach(btn=>btn.onclick=async()=>{
-        if(confirm('حذف الخبر ده؟')){btn.disabled=true;await db.collection('news').doc(btn.dataset.id).delete();loadNews();}
-      });
+      box.innerHTML=arr.map(n=>`<div class="item"><div class="item-top"><b>${n.title}</b></div><p class="item-meta">${new Date(n.createdAt).toLocaleDateString('ar-EG',{day:'numeric',month:'long',year:'numeric'})}${n.image?' • 📷 بصورة':''}</p><button class="no" data-id="${n.id}"><i class="fa-solid fa-trash"></i> حذف</button></div>`).join('');
+      box.querySelectorAll('.no').forEach(btn=>btn.onclick=async()=>{if(confirm('حذف الخبر ده؟')){btn.disabled=true;await db.collection('news').doc(btn.dataset.id).delete();loadNews();}});
     }catch(e){box.innerHTML='<p class="muted">خطأ في التحميل.</p>';}
   }
-
-  $('logoutBtn').onclick=async()=>{localStorage.removeItem('aea_user');await auth.signOut();location.href='index.html';};
+  $('logoutBtn').onclick=async()=>{localStorage.removeItem('bw_user');await auth.signOut();location.href='index.html';};
 </script>
 </body>
 </html>
