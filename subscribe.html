@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الاشتراك الذهبي | منصة بن وائل التعليمية</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#f6f7fb;--card:#fff;--line:#e6e9f0;--text:#101828;--muted:#667085;--orange:#ea580c;--amber:#f59e0b;--grad:linear-gradient(135deg,#f59e0b,#ea580c);--shadow:0 10px 30px rgba(16,24,40,.08)}
+body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+a{text-decoration:none;color:inherit}
+.container{max-width:950px;margin:auto;padding:0 20px}
+.top{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.88);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.top-wrap{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;gap:14px;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:10px;font-weight:900;font-size:18px}
+.logo img{width:46px;height:46px;object-fit:contain}
+.logo b{background:var(--grad);-webkit-background-clip:text;color:transparent}
+.top-actions{display:flex;align-items:center;gap:10px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:12px;font-weight:900;font-size:14px;font-family:inherit;cursor:pointer;transition:.3s;border:none}
+.btn-ghost{background:#fff;border:1.5px solid var(--line);color:var(--text)}
+.btn-ghost:hover{border-color:var(--amber);color:var(--orange)}
+.btn-danger{background:#fff;border:1.5px solid #fecaca;color:#b91c1c}
+.btn-danger:hover{background:#fef2f2}
+.btn-primary{width:100%;justify-content:center;padding:14px;background:var(--grad);color:#fff;box-shadow:0 10px 25px rgba(234,88,12,.3);font-size:15px}
+.btn-primary:hover{transform:translateY(-3px)}
+.btn-wa{background:#25d366;color:#fff;justify-content:center;width:100%;padding:13px;font-size:14px}
+main{position:relative;z-index:1;padding:40px 0 70px}
+.page-head{text-align:center;margin-bottom:30px}
+.page-head h1{font-size:clamp(26px,4vw,40px);font-weight:900}
+.page-head h1 i{color:var(--amber)}
+.page-head p{color:var(--muted);margin-top:8px}
+.status-card{border-radius:22px;padding:24px 26px;margin-bottom:26px;display:flex;gap:16px;align-items:center;flex-wrap:wrap;border:1.5px solid}
+.status-card i{font-size:34px}
+.status-card b{font-size:17px;display:block}
+.status-card p{font-size:13.5px;font-weight:700;margin-top:4px}
+.st-active{background:#ecfdf3;border-color:#abefc6;color:#067647}
+.st-pending{background:#fef3c7;border-color:#fcd34d;color:#92400e}
+.st-none{background:#fff7ed;border-color:#fed7aa;color:#c2410c}
+.st-rejected{background:#fef2f2;border-color:#fecaca;color:#b42318}
+.plans{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-bottom:26px}
+.plan{background:#fff;border:2px solid var(--line);border-radius:24px;padding:32px 26px;text-align:center;position:relative;transition:.35s}
+.plan:hover{transform:translateY(-8px);box-shadow:0 20px 50px rgba(16,24,40,.12)}
+.plan.best{border-color:var(--amber);box-shadow:0 20px 50px rgba(245,158,11,.2)}
+.plan .crown{position:absolute;top:-16px;right:50%;transform:translateX(50%);background:var(--grad);color:#fff;padding:5px 18px;border-radius:50px;font-size:12px;font-weight:900;box-shadow:0 8px 20px rgba(234,88,12,.35)}
+.plan h3{font-size:19px;font-weight:900;margin-bottom:8px}
+.price{font-size:40px;font-weight:900;background:var(--grad);-webkit-background-clip:text;color:transparent}
+.price small{font-size:15px}
+.plan ul{list-style:none;margin:18px 0;text-align:right}
+.plan li{padding:8px 0;font-size:14px;font-weight:700;color:var(--muted);display:flex;gap:10px;align-items:center}
+.plan li i{color:#12b76a}
+.pay-card{background:#fff;border:1px solid var(--line);border-radius:24px;padding:28px;box-shadow:var(--shadow);margin-bottom:26px}
+.pay-card h2{font-size:17px;font-weight:900;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.pay-card h2 i{color:var(--orange)}
+.pay-methods{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px}
+.pay-m{background:var(--bg);border:1.5px dashed var(--line);border-radius:16px;padding:16px;text-align:center}
+.pay-m b{display:block;font-size:14px;margin-bottom:6px}
+.pay-m .num{font-size:20px;font-weight:900;color:var(--orange);letter-spacing:1px;direction:ltr}
+.copy-btn{margin-top:10px;border-radius:10px;padding:7px 16px;font-family:inherit;font-size:12px;font-weight:900;cursor:pointer;background:none;border:1.5px solid #abefc6;color:#067647}
+.copy-btn:hover{background:#ecfdf3}
+.steps-pay{background:var(--bg);border-radius:16px;padding:18px;font-size:14px;font-weight:700;color:var(--muted);line-height:2.2}
+.steps-pay b{color:var(--text)}
+.form-card{background:#fff;border:1px solid var(--line);border-radius:24px;padding:28px;box-shadow:var(--shadow)}
+.form-card h2{font-size:17px;font-weight:900;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.form-card h2 i{color:var(--orange)}
+.field{margin-bottom:12px;text-align:right}
+.field label{display:block;font-weight:800;font-size:12.5px;margin-bottom:5px;color:#344054}
+.field input,.field select{width:100%;padding:12px 14px;border-radius:12px;background:#fff;border:1.5px solid var(--line);color:var(--text);font-family:inherit;font-size:14px;outline:none}
+.field input:focus,.field select:focus{border-color:var(--amber)}
+.alert{display:none;padding:12px 16px;border-radius:12px;margin-bottom:14px;font-size:14px;font-weight:700}
+.alert.error{background:#fef2f2;border:1px solid #fecaca;color:#b42318}
+.alert.success{background:#ecfdf3;border:1px solid #abefc6;color:#067647}
+@media(max-width:700px){.plans,.pay-methods{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="container top-wrap">
+    <a href="index.html" class="logo"><img src="logo.png" alt="بن وائل" onerror="this.style.display='none'"><span>منصة <b>بن وائل</b></span></a>
+    <div class="top-actions">
+      <a href="dashboard.html" class="btn btn-ghost"><i class="fa-solid fa-gauge-high"></i> لوحتك</a>
+      <button id="logoutBtn" class="btn btn-danger"><i class="fa-solid fa-right-from-bracket"></i> خروج</button>
+    </div>
+  </div>
+</header>
+<main class="container">
+  <section class="page-head">
+    <h1>الاشتراك الذهبي <i class="fa-solid fa-crown"></i></h1>
+    <p>افتح كل المحاضرات والملخصات بدون أكواد — اشتراك واحد ويخلصك</p>
+  </section>
+  <div id="statusBox"></div>
+  <div class="plans">
+    <div class="plan">
+      <h3>اشتراك شهري</h3>
+      <div class="price">75 <small>ج/شهر</small></div>
+      <ul>
+        <li><i class="fa-solid fa-check"></i> كل المحاضرات بدون أكواد</li>
+        <li><i class="fa-solid fa-check"></i> كل الملخصات المحمية</li>
+        <li><i class="fa-solid fa-check"></i> اختبارات غير محدودة</li>
+        <li><i class="fa-solid fa-check"></i> دعم واتساب</li>
+      </ul>
+      <button class="btn btn-ghost" data-plan="monthly" style="width:100%;justify-content:center">اختار الشهري</button>
+    </div>
+    <div class="plan best">
+      <span class="crown">الأوفر 👑</span>
+      <h3>اشتراك الترم</h3>
+      <div class="price">200 <small>ج/٤ شهور</small></div>
+      <ul>
+        <li><i class="fa-solid fa-check"></i> كل مميزات الشهري</li>
+        <li><i class="fa-solid fa-check"></i> ٤ شهور كاملة</li>
+        <li><i class="fa-solid fa-check"></i> توفير 100ج عن الشهري</li>
+        <li><i class="fa-solid fa-check"></i> أولوية في الدعم</li>
+      </ul>
+      <button class="btn btn-primary" data-plan="term" style="margin:0">اختار الترم</button>
+    </div>
+  </div>
+  <div class="pay-card">
+    <h2><i class="fa-solid fa-wallet"></i> طرق الدفع</h2>
+    <div class="pay-methods">
+      <div class="pay-m"><b>فودافون كاش</b><div class="num">01032850095</div><button class="copy-btn" data-copy="01032850095"><i class="fa-solid fa-copy"></i> نسخ الرقم</button></div>
+      <div class="pay-m"><b>إنستاباي</b><div class="num">01032850095</div><button class="copy-btn" data-copy="01032850095"><i class="fa-solid fa-copy"></i> نسخ الرقم</button></div>
+    </div>
+    <div class="steps-pay">
+      <b>١.</b> حوّل المبلغ على الرقم اللي فوق<br>
+      <b>٢.</b> احتفظ برقم العملية أو صورة الإيصال<br>
+      <b>٣.</b> عبّي الفورم تحت وابعت طلبك<br>
+      <b>٤.</b> ابعت صورة الإيصال واتساب عشان نفعّل أسرع
+    </div>
+  </div>
+  <div class="form-card">
+    <h2><i class="fa-solid fa-paper-plane"></i> إرسال طلب الاشتراك</h2>
+    <div class="alert error" id="errBox"></div>
+    <div class="alert success" id="okBox"></div>
+    <form id="subForm" novalidate>
+      <div class="field"><label>نوع الاشتراك</label>
+        <select id="plan"><option value="monthly">شهري — 75ج</option><option value="term">ترم كامل — 200ج</option></select>
+      </div>
+      <div class="field"><label>رقم موبايلك</label><input id="phone" dir="ltr" placeholder="01xxxxxxxxx"></div>
+      <div class="field"><label>رقم العملية / مرجع التحويل (اختياري)</label><input id="ref" dir="ltr" placeholder="مثال: 789456123"></div>
+      <button class="btn btn-primary" id="submitBtn" type="submit"><span>إرسال الطلب <i class="fa-solid fa-paper-plane"></i></span></button>
+    </form>
+    <div style="margin-top:14px">
+      <a href="https://wa.me/201032850095?text=السلام%20عليكم%20—%20حوّلت%20فلوس%20الاشتراك%20وعايز%20التفعيل" target="_blank" class="btn btn-wa"><i class="fa-brands fa-whatsapp"></i> ابعت الإيصال واتساب</a>
+    </div>
+  </div>
+</main>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="js/config.js"></script>
+<script>
+  const $=id=>document.getElementById(id);
+  let me=null,latest=null;
+  document.querySelectorAll('.copy-btn').forEach(b=>b.onclick=()=>{const t=b.dataset.copy;if(navigator.clipboard)navigator.clipboard.writeText(t);const o=b.innerHTML;b.innerHTML='<i class="fa-solid fa-check"></i> اتنسخ';setTimeout(()=>b.innerHTML=o,1200);});
+  document.querySelectorAll('[data-plan]').forEach(b=>b.onclick=()=>{$('plan').value=b.dataset.plan;document.querySelector('.form-card').scrollIntoView({behavior:'smooth'});});
+  auth.onAuthStateChanged(async user=>{
+    if(!user){location.href='login.html';return;}
+    let data={};try{data=JSON.parse(localStorage.getItem('bw_user')||'{}')}catch(e){}
+    try{const s=await db.collection('profiles').doc(user.uid).get();if(s.exists)Object.assign(data,s.data())}catch(e){}
+    me={uid:user.uid,name:data.name||user.email.split('@')[0],phone:data.phone||'',subExpires:data.subExpires||null};
+    $('phone').value=me.phone;loadMySub();
+  });
+  async function loadMySub(){
+    try{
+      const snap=await db.collection('subscriptions').where('user_id','==',me.uid).get();
+      const arr=[];snap.forEach(d=>arr.push(Object.assign({id:d.id},d.data())));
+      arr.sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
+      latest=arr[0]||null;
+    }catch(e){latest=null;}
+    renderStatus();
+  }
+  function renderStatus(){
+    const box=$('statusBox');
+    const vip=me.subExpires&&new Date(me.subExpires).getTime()>Date.now();
+    if(vip){box.innerHTML='<div class="status-card st-active"><i class="fa-solid fa-crown"></i><div><b>اشتراكك الذهبي فعال 👑</b><p>مستمتع بكل المحتوى بدون أكواد لحد '+new Date(me.subExpires).toLocaleDateString('ar-EG',{day:'numeric',month:'long',year:'numeric'})+'</p></div></div>';$('subForm').style.display='none';}
+    else if(latest&&latest.status==='pending'){box.innerHTML='<div class="status-card st-pending"><i class="fa-solid fa-hourglass-half"></i><div><b>طلبك قيد المراجعة</b><p>بعد ما تأكد التحويل هنفعّل اشتراكك — ابعت الإيصال واتساب عشان نسرّع العملية</p></div></div>';$('subForm').style.display='none';}
+    else if(latest&&latest.status==='rejected'){box.innerHTML='<div class="status-card st-rejected"><i class="fa-solid fa-circle-xmark"></i><div><b>طلبك الأخير اترفض</b><p>غالبًا التحويل موصلناش — تواصل معنا واتساب وابعت طلب جديد</p></div></div>';}
+    else{box.innerHTML='<div class="status-card st-none"><i class="fa-solid fa-lock"></i><div><b>لسه مشتركش</b><p>اختار باقة من اللي فوق وحوّل وابعث طلبك — التفعيل خلال ساعات</p></div></div>';}
+  }
+  $('subForm').addEventListener('submit',async e=>{
+    e.preventDefault();$('errBox').style.display='none';$('okBox').style.display='none';
+    const plan=$('plan').value,phone=$('phone').value.trim(),ref=$('ref').value.trim();
+    if(phone.length<10){$('errBox').textContent='⚠️ اكتب رقم موبايل صحيح.';$('errBox').style.display='block';return;}
+    try{
+      await db.collection('subscriptions').add({user_id:me.uid,student:me.name,phone,plan,ref,status:'pending',createdAt:new Date().toISOString()});
+      $('okBox').textContent='✅ طلبك اتبعت! هنراجعه ونفعّل اشتراكك — ابعت الإيصال واتساب عشان أسرع.';$('okBox').style.display='block';
+      $('subForm').reset();$('phone').value=phone;loadMySub();
+    }catch(er){$('errBox').textContent='⚠️ '+((er&&er.message)||er);$('errBox').style.display='block';}
+  });
+  $('logoutBtn').onclick=async()=>{localStorage.removeItem('bw_user');await auth.signOut();location.href='index.html';};
+</script>
+</body>
+</html>

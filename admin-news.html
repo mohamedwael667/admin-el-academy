@@ -54,6 +54,7 @@ main{position:relative;z-index:1;padding:40px 0 70px}
 </style>
 </head>
 <body>
+
 <header class="top">
   <div class="container top-wrap">
     <a href="index.html" class="logo"><img src="logo.png" alt="بن وائل" onerror="this.style.display='none'"><span>منصة <b>بن وائل</b></span></a>
@@ -63,8 +64,10 @@ main{position:relative;z-index:1;padding:40px 0 70px}
     </div>
   </div>
 </header>
+
 <main class="container">
   <section class="page-head"><h1>نشر خبر جديد <i class="fa-solid fa-bullhorn"></i></h1></section>
+
   <div id="adminArea">
     <div class="card-glass">
       <h2><i class="fa-solid fa-circle-plus"></i> خبر جديد</h2>
@@ -77,37 +80,50 @@ main{position:relative;z-index:1;padding:40px 0 70px}
         <button class="btn btn-primary" id="submitNews" type="submit"><span>نشر الخبر <i class="fa-solid fa-paper-plane"></i></span><span class="spinner"></span></button>
       </form>
     </div>
+
     <div class="card-glass mt">
       <h2><i class="fa-solid fa-newspaper"></i> الأخبار المنشورة</h2>
       <div id="newsList" class="list"><p class="muted">ثواني بنحمّل…</p></div>
     </div>
   </div>
 </main>
+
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script src="js/config.js"></script>
 <script>
-  const ADMIN_EMAIL="admin@benwael.com";
+  const ADMIN_EMAIL="admin@academy.com";
   const $=id=>document.getElementById(id);
+
   auth.onAuthStateChanged(user=>{
     if(!user){location.href='login.html';return;}
     if(user.email!==ADMIN_EMAIL){$('adminArea').innerHTML='<div style="text-align:center;padding:60px"><i class="fa-solid fa-lock" style="font-size:44px;color:var(--amber);display:block;margin-bottom:16px"></i><h2>مفيش صلاحية أدمن</h2></div>';return;}
     loadNews();
   });
-  function toImg(u){if(!u)return'';if(u.includes('drive.google.com')){const m=u.match(/\/d\/([\w-]+)/)||u.match(/[?&]id=([\w-]+)/);if(m)return'https://lh3.googleusercontent.com/d/'+m[1];}return u;}
+
+  function toImg(u){
+    if(!u)return'';
+    if(u.includes('drive.google.com')){const m=u.match(/\/d\/([\w-]+)/)||u.match(/[?&]id=([\w-]+)/);if(m)return'https://lh3.googleusercontent.com/d/'+m[1];}
+    return u;
+  }
+
   $('newsForm').addEventListener('submit',async e=>{
-    e.preventDefault();$('errBox').style.display='none';$('okBox').style.display='none';
-    const title=$('nTitle').value.trim(),content=$('nContent').value.trim(),image=toImg($('nImage').value.trim());
+    e.preventDefault();
+    $('errBox').style.display='none';$('okBox').style.display='none';
+    const title=$('nTitle').value.trim(),content=$('nContent').value.trim();
+    const image=toImg($('nImage').value.trim());
     if(!title||!content){$('errBox').textContent='⚠️ اكتب عنوان الخبر ونصه.';$('errBox').style.display='block';return;}
     $('submitNews').classList.add('loading');
     try{
       await db.collection('news').add({title,content,image,createdAt:new Date().toISOString()});
-      $('okBox').textContent='✅ الخبر اتنشر! الطلاب هيظهرلهم الجرس والإشعار دلوقتي.';$('okBox').style.display='block';
+      $('okBox').textContent='✅ الخبر اتنشر! الطلاب هيظهرلهم الجرس والإشعار دلوقتي.';
+      $('okBox').style.display='block';
       $('newsForm').reset();loadNews();
     }catch(er){$('errBox').textContent='⚠️ '+((er&&er.message)||er);$('errBox').style.display='block';}
     finally{$('submitNews').classList.remove('loading');}
   });
+
   async function loadNews(){
     const box=$('newsList');
     try{
@@ -115,10 +131,18 @@ main{position:relative;z-index:1;padding:40px 0 70px}
       const arr=[];snap.forEach(d=>arr.push(Object.assign({id:d.id},d.data())));
       arr.sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
       if(!arr.length){box.innerHTML='<p class="muted">لسه مفيش أخبار منشورة.</p>';return;}
-      box.innerHTML=arr.map(n=>`<div class="item"><div class="item-top"><b>${n.title}</b></div><p class="item-meta">${new Date(n.createdAt).toLocaleDateString('ar-EG',{day:'numeric',month:'long',year:'numeric'})}${n.image?' • 📷 بصورة':''}</p><button class="no" data-id="${n.id}"><i class="fa-solid fa-trash"></i> حذف</button></div>`).join('');
-      box.querySelectorAll('.no').forEach(btn=>btn.onclick=async()=>{if(confirm('حذف الخبر ده؟')){btn.disabled=true;await db.collection('news').doc(btn.dataset.id).delete();loadNews();}});
+      box.innerHTML=arr.map(n=>`
+        <div class="item">
+          <div class="item-top"><b>${n.title}</b></div>
+          <p class="item-meta">${new Date(n.createdAt).toLocaleDateString('ar-EG',{day:'numeric',month:'long',year:'numeric'})}${n.image?' • 📷 بصورة':''}</p>
+          <button class="no" data-id="${n.id}"><i class="fa-solid fa-trash"></i> حذف</button>
+        </div>`).join('');
+      box.querySelectorAll('.no').forEach(btn=>btn.onclick=async()=>{
+        if(confirm('حذف الخبر ده؟')){btn.disabled=true;await db.collection('news').doc(btn.dataset.id).delete();loadNews();}
+      });
     }catch(e){box.innerHTML='<p class="muted">خطأ في التحميل.</p>';}
   }
+
   $('logoutBtn').onclick=async()=>{localStorage.removeItem('bw_user');await auth.signOut();location.href='index.html';};
 </script>
 </body>
