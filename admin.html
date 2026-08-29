@@ -3,285 +3,155 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>لوحة الأدمن | Admin El Academy</title>
+<title>لوحة الأدمن | منصة بن وائل التعليمية</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--bg:#050b1e;--line:rgba(255,255,255,.09);--sky:#38bdf8;--gold:#facc15;--text:#eef2ff;--muted:#9fb0ce;--grad:linear-gradient(135deg,#1e3a8a,#2563eb 55%,#38bdf8)}
-body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+:root{--bg:#f6f7fb;--card:#fff;--line:#e6e9f0;--text:#101828;--muted:#667085;--orange:#ea580c;--amber:#f59e0b;--grad:linear-gradient(135deg,#f59e0b,#ea580c);--shadow:0 10px 30px rgba(16,24,40,.08)}
+body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
 a{text-decoration:none;color:inherit}
-.container{max-width:1150px;margin:auto;padding:0 20px}
-.blob{position:fixed;border-radius:50%;filter:blur(95px);opacity:.35;z-index:0}
-.blob-1{width:520px;height:520px;background:radial-gradient(circle,#1d4ed8,transparent 65%);top:-140px;right:-120px}
-.blob-2{width:460px;height:460px;background:radial-gradient(circle,#0e7490,transparent 65%);bottom:-120px;left:-100px}
-.top{position:sticky;top:0;z-index:10;background:rgba(5,11,30,.85);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
-.top-wrap{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;gap:14px}
-.logo{display:flex;align-items:center;gap:10px;font-weight:800}
-.logo img{width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,255,255,.4)}
-.logo b{background:linear-gradient(90deg,#93c5fd,#fde047);-webkit-background-clip:text;color:transparent}
-.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:12px;font-weight:800;font-size:14px;font-family:inherit;cursor:pointer;transition:.3s;border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--text)}
-.btn.danger{color:#fca5a5;border-color:rgba(239,68,68,.35);background:none}
-main{position:relative;z-index:1;padding:40px 0 70px}
-.page-head{text-align:center;margin-bottom:30px}
+.container{max-width:1200px;margin:auto;padding:0 20px}
+.top{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.88);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.top-wrap{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;gap:14px;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:10px;font-weight:900;font-size:18px}
+.logo img{width:46px;height:46px;object-fit:contain}
+.logo b{background:var(--grad);-webkit-background-clip:text;color:transparent}
+.top-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:12px;font-weight:900;font-size:14px;font-family:inherit;cursor:pointer;transition:.3s;border:none}
+.btn-ghost{background:#fff;border:1.5px solid var(--line);color:var(--text)}
+.btn-ghost:hover{border-color:var(--amber);color:var(--orange)}
+.btn-danger{background:#fff;border:1.5px solid #fecaca;color:#b91c1c}
+.btn-danger:hover{background:#fef2f2}
+main{padding:40px 0 70px;position:relative;z-index:1}
+.page-head{margin-bottom:28px}
 .page-head h1{font-size:clamp(24px,4vw,36px);font-weight:900}
-.page-head h1 i{color:var(--gold)}
-.page-head p{color:var(--muted);margin-top:8px}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:26px}
-.stat{background:rgba(8,18,49,.6);border:1px solid var(--line);border-radius:18px;padding:18px;text-align:center}
-.stat i{color:var(--gold);font-size:22px}
-.stat b{display:block;font-size:26px;font-weight:900;margin:6px 0}
+.page-head h1 i{color:var(--orange)}
+.page-head p{color:var(--muted);margin-top:6px}
+.stats{display:grid;grid-template-columns:repeat(6,1fr);gap:16px;margin-bottom:30px}
+.stat{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px;text-align:center;transition:.3s}
+.stat:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+.stat i{font-size:24px;color:var(--orange);margin-bottom:10px;display:block}
+.stat b{display:block;font-size:24px;font-weight:900}
 .stat span{color:var(--muted);font-size:12px;font-weight:800}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:26px;align-items:start}
-.card-glass{background:rgba(8,18,49,.6);backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:24px;padding:26px}
+.mgmt{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:30px}
+.mgmt a{background:#fff;border:1.5px solid var(--line);border-radius:20px;padding:26px 20px;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;transition:.35s}
+.mgmt a:hover{transform:translateY(-6px);border-color:var(--amber);box-shadow:0 15px 35px rgba(16,24,40,.1)}
+.mgmt i{width:56px;height:56px;border-radius:16px;display:grid;place-items:center;font-size:22px;color:#fff;background:var(--grad);box-shadow:0 8px 20px rgba(234,88,12,.3)}
+.mgmt b{font-size:15px;font-weight:900}
+.mgmt small{color:var(--muted);font-size:12px;font-weight:700}
+.grid2{display:grid;grid-template-columns:1.2fr 1fr;gap:26px;align-items:start}
+.card-glass{background:#fff;border:1px solid var(--line);border-radius:24px;padding:26px;box-shadow:var(--shadow)}
 .card-glass h2{font-size:17px;font-weight:900;margin-bottom:16px;display:flex;align-items:center;gap:10px}
-.card-glass h2 i{color:var(--gold)}
-.alert{display:none;padding:12px 16px;border-radius:12px;margin-bottom:14px;font-size:14px;font-weight:700}
-.alert.error{background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.45);color:#fca5a5}
-.alert.success{background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.45);color:#86efac}
-.field{margin-bottom:12px;text-align:right}
-.field label{display:block;font-weight:800;font-size:12.5px;margin-bottom:5px;color:#c9d4ea}
-.field input,.field select{width:100%;padding:11px 13px;border-radius:12px;background:rgba(255,255,255,.05);border:1px solid var(--line);color:var(--text);font-family:inherit;font-size:14px;outline:none;transition:.3s}
-.field input:focus,.field select:focus{border-color:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,.22)}
-.field select option{background:#081231}
-.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.btn.primary{width:100%;justify-content:center;padding:13px;border:none;background:var(--grad);color:#fff;box-shadow:0 10px 30px rgba(37,99,235,.4);font-size:15px}
-.spinner{display:none;width:18px;height:18px;border:3px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite}
-.btn.loading .spinner{display:inline-block}.btn.loading{pointer-events:none;opacity:.8}
-@keyframes spin{to{transform:rotate(360deg)}}
-.list{display:flex;flex-direction:column;gap:12px;max-height:480px;overflow-y:auto;padding-left:6px}
-.item{background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:14px;padding:14px}
-.item-top{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:6px;align-items:center}
-.item-meta{color:var(--muted);font-size:12.5px;font-weight:700;margin-bottom:10px}
-.st{font-size:11px;font-weight:800;padding:4px 12px;border-radius:50px}
-.st.pending{background:rgba(250,204,21,.12);color:var(--gold);border:1px solid rgba(250,204,21,.4)}
-.st.approved{background:rgba(34,197,94,.12);color:#86efac;border:1px solid rgba(34,197,94,.4)}
-.st.cancelled{background:rgba(239,68,68,.12);color:#fca5a5;border:1px solid rgba(239,68,68,.4)}
-.item-actions{display:flex;gap:8px;flex-wrap:wrap}
-.ok,.no{border-radius:10px;padding:7px 14px;font-family:inherit;font-size:12px;font-weight:800;cursor:pointer;transition:.3s;background:none}
-.ok{border:1px solid rgba(34,197,94,.4);color:#86efac}.ok:hover{background:rgba(34,197,94,.12)}
-.no{border:1px solid rgba(239,68,68,.35);color:#fca5a5}.no:hover{background:rgba(239,68,68,.12)}
+.card-glass h2 i{color:var(--orange)}
+.list{display:flex;flex-direction:column;gap:12px}
+.item{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.item-top{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:4px}
+.item-top b{font-size:14.5px;font-weight:900}
+.item-meta{color:var(--muted);font-size:12.5px;font-weight:700}
+.st{font-size:11px;font-weight:900;padding:4px 12px;border-radius:50px}
+.st.pending{background:#fef3c7;color:#92400e;border:1px solid #fcd34d}
+.st.approved{background:#ecfdf3;color:#067647;border:1px solid #abefc6}
+.st.cancelled{background:#fef2f2;color:#b42318;border:1px solid #fecaca}
+.item-actions{display:flex;gap:8px;margin-top:10px}
+.ok,.no{border-radius:10px;padding:7px 14px;font-family:inherit;font-size:12px;font-weight:900;cursor:pointer;transition:.3s;background:none}
+.ok{border:1.5px solid #abefc6;color:#067647}.ok:hover{background:#ecfdf3}
+.no{border:1.5px solid #fecaca;color:#b91c1c}.no:hover{background:#fef2f2}
 .muted{color:var(--muted);font-size:14px}
-.mt{margin-top:26px}
-@media(max-width:900px){.grid{grid-template-columns:1fr}}
-@media(max-width:560px){.stats{grid-template-columns:1fr}}
+@media(max-width:1024px){.stats{grid-template-columns:repeat(3,1fr)}.mgmt{grid-template-columns:repeat(2,1fr)}.grid2{grid-template-columns:1fr}}
+@media(max-width:640px){.stats{grid-template-columns:repeat(2,1fr)}.mgmt{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-<div class="blob blob-1"></div><div class="blob blob-2"></div>
-
 <header class="top">
   <div class="container top-wrap">
-    <a href="index.html" class="logo"><img src="logo.png" alt="" onerror="this.style.display='none'"><span>Admin <b>El Academy</b></span></a>
-    <div style="display:flex;gap:10px">
-      <a href="index.html" class="btn"><i class="fa-solid fa-house"></i> الرئيسية</a>
-            <a href="admin-news.html" class="btn"><i class="fa-solid fa-bullhorn"></i> نشر الأخبار</a>
-      <a href="admin-quizzes.html" class="btn"><i class="fa-solid fa-file-pen"></i> الاختبارات</a>      <button id="logoutBtn" class="btn danger"><i class="fa-solid fa-right-from-bracket"></i> خروج</button>
+    <a href="index.html" class="logo"><img src="logo.png" alt="بن وائل" onerror="this.style.display='none'"><span>منصة <b>بن وائل</b></span></a>
+    <div class="top-actions">
+      <a href="index.html" class="btn btn-ghost"><i class="fa-solid fa-house"></i> عرض الموقع</a>
+      <a href="dashboard.html" class="btn btn-ghost"><i class="fa-solid fa-gauge-high"></i> لوحتي</a>
+      <button id="logoutBtn" class="btn btn-danger"><i class="fa-solid fa-right-from-bracket"></i> خروج</button>
     </div>
   </div>
 </header>
-
 <main class="container">
   <section class="page-head">
     <h1>لوحة الأدمن <i class="fa-solid fa-user-shield"></i></h1>
-    <p>ضيف المحاضرات والملخصات لكل فرقة وقسم، وأكّد أو ارفض حجوزات الطلاب</p>
+    <p>تحكم كامل في المنصة: المحتوى، الأكواد، الحجوزات، الاشتراكات، والطلاب</p>
   </section>
-
-  <div class="card-glass" id="noAccess" style="display:none;text-align:center;padding:50px">
-    <i class="fa-solid fa-lock" style="font-size:44px;color:var(--gold);margin-bottom:16px;display:block"></i>
-    <h2 style="justify-content:center">مفيش صلاحية أدمن</h2>
-    <p class="muted">سجّل دخول بحساب الأدمن عشان تقدر تدخل هنا.</p>
+  <div class="stats">
+    <div class="stat"><i class="fa-solid fa-users"></i><b id="cStudents">0</b><span>طالب مسجل</span></div>
+    <div class="stat"><i class="fa-solid fa-chalkboard-user"></i><b id="cTeachers">0</b><span>مدرس</span></div>
+    <div class="stat"><i class="fa-solid fa-video"></i><b id="cLectures">0</b><span>محاضرة</span></div>
+    <div class="stat"><i class="fa-solid fa-book-open"></i><b id="cSummaries">0</b><span>ملخص</span></div>
+    <div class="stat"><i class="fa-solid fa-key"></i><b id="cUsed">0</b><span>أكواد مستخدمة</span></div>
+    <div class="stat"><i class="fa-solid fa-hourglass-half"></i><b id="cPending">0</b><span>حجوزات معلقة</span></div>
   </div>
-
-  <div id="adminArea">
-    <div class="stats">
-      <div class="stat"><i class="fa-solid fa-video"></i><b id="cLec">0</b><span>محاضرة مضافة</span></div>
-      <div class="stat"><i class="fa-solid fa-file-pdf"></i><b id="cSum">0</b><span>ملخص مضاف</span></div>
-      <div class="stat"><i class="fa-solid fa-hourglass-half"></i><b id="cPend">0</b><span>حجوزات قيد المراجعة</span></div>
+  <div class="mgmt">
+    <a href="admin-lectures.html"><i class="fa-solid fa-video"></i><b>إدارة المحاضرات</b><small>إضافة + توليد أكواد فردية</small></a>
+    <a href="admin-summaries.html"><i class="fa-solid fa-book-open"></i><b>إدارة الملخصات</b><small>ملخصات محمية بعلامة مائية</small></a>
+    <a href="admin-quizzes.html"><i class="fa-solid fa-file-pen"></i><b>صانع الاختبارات</b><small>أسئلة + تصحيح فوري</small></a>
+    <a href="admin-news.html"><i class="fa-solid fa-bullhorn"></i><b>نشر الأخبار</b><small>إشعارات فورية للطلاب</small></a>
+    <a href="admin-teachers.html"><i class="fa-solid fa-chalkboard-user"></i><b>إدارة المدرسين</b><small>حسابات دخول للمدرسين</small></a>
+    <a href="admin-subs.html"><i class="fa-solid fa-crown"></i><b>إدارة الاشتراكات</b><small>تفعيل VIP / رفض</small></a>
+    <a href="#bookings"><i class="fa-solid fa-calendar-check"></i><b>إدارة الحجوزات</b><small>تأكيد / رفض</small></a>
+  </div>
+  <div class="grid2">
+    <div class="card-glass" id="bookings">
+      <h2><i class="fa-solid fa-calendar-check"></i> حجوزات الطلاب</h2>
+      <div id="booksList" class="list"><p class="muted">ثواني بنحمّل…</p></div>
     </div>
-
-    <div class="grid">
-      <div class="card-glass">
-        <h2><i class="fa-solid fa-circle-plus"></i> إضافة محاضرة</h2>
-        <div class="alert error" id="errBox"></div>
-        <div class="alert success" id="okBox"></div>
-        <form id="lecForm" novalidate>
-          <div class="field"><label>عنوان المحاضرة</label><input id="title" placeholder="مثال: محاضرة ١ — مقدمة في النظم"></div>
-          <div class="row">
-            <div class="field"><label>المادة</label><input id="subject" placeholder="مثال: نظم معلومات"></div>
-            <div class="field"><label>الدكتور</label><input id="doctor" placeholder="مثال: د. أحمد محمود"></div>
-          </div>
-          <div class="row">
-            <div class="field"><label>الفرقة</label>
-              <select id="year"><option>الأولى</option><option>الثانية</option><option>الثالثة</option><option>الرابعة</option></select>
-            </div>
-            <div class="field"><label>القسم</label>
-              <select id="dept"><option>نظم ومعلومات إدارية</option><option>إدارة أعمال</option><option>تسويق</option></select>
-            </div>
-          </div>
-          <div class="row">
-            <div class="field"><label>رابط يوتيوب</label><input id="yt" dir="ltr" placeholder="https://youtube.com/watch?v=..."></div>
-            <div class="field"><label>المدة</label><input id="dur" dir="ltr" placeholder="45:20"></div>
-          </div>
-          <button class="btn primary" id="submitBtn" type="submit"><span>نشر المحاضرة <i class="fa-solid fa-paper-plane"></i></span><span class="spinner"></span></button>
-        </form>
-      </div>
-
-      <div class="card-glass">
-        <h2><i class="fa-solid fa-calendar-check"></i> حجوزات الطلاب</h2>
-        <div id="books" class="list"><p class="muted">ثواني بنحمّل…</p></div>
-      </div>
-    </div>
-
-    <div class="card-glass mt">
-      <h2><i class="fa-solid fa-file-arrow-up"></i> نشر ملخص PDF (برابط Google Drive)</h2>
-      <div class="alert error" id="errBox2"></div>
-      <div class="alert success" id="okBox2"></div>
-      <form id="sumForm" novalidate>
-        <div class="field"><label>عنوان الملخص</label><input id="sTitle" placeholder="مثال: ملخص الفصل الأول — نظم معلومات"></div>
-        <div class="row">
-          <div class="field"><label>المادة</label><input id="sSubject" placeholder="مثال: نظم معلومات"></div>
-          <div class="field"><label>الدكتور</label><input id="sDoctor" placeholder="مثال: د. أحمد محمود"></div>
-        </div>
-        <div class="row">
-          <div class="field"><label>الفرقة</label>
-            <select id="sYear"><option>الأولى</option><option>الثانية</option><option>الثالثة</option><option>الرابعة</option></select>
-          </div>
-          <div class="field"><label>القسم</label>
-            <select id="sDept"><option>نظم ومعلومات إدارية</option><option>إدارة أعمال</option><option>تسويق</option></select>
-          </div>
-        </div>
-        <div class="field"><label>رابط الملخص من Google Drive</label><input id="sLink" dir="ltr" placeholder="https://drive.google.com/..."></div>
-        <button class="btn primary" id="submitSum" type="submit"><span>نشر الملخص <i class="fa-solid fa-cloud-arrow-up"></i></span><span class="spinner"></span></button>
-      </form>
-    </div>
-
-    <div class="card-glass mt">
-      <h2><i class="fa-solid fa-file-pdf"></i> الملخصات المضافة</h2>
-      <div id="sumsList" class="list"><p class="muted">ثواني بنحمّل…</p></div>
-    </div>
-
-    <div class="card-glass mt">
-      <h2><i class="fa-solid fa-clapperboard"></i> المحاضرات المضافة</h2>
-      <div id="lecsList" class="list"><p class="muted">ثواني بنحمّل…</p></div>
+    <div class="card-glass">
+      <h2><i class="fa-solid fa-users"></i> آخر الطلاب المسجلين</h2>
+      <div id="studentsList" class="list"><p class="muted">ثواني بنحمّل…</p></div>
     </div>
   </div>
 </main>
-
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script src="js/config.js"></script>
 <script>
-  const ADMIN_EMAIL="admin@academy.com";
   const $=id=>document.getElementById(id);
-
+  const ADMIN_EMAIL="admin@benwael.com";
   auth.onAuthStateChanged(user=>{
     if(!user){location.href='login.html';return;}
-    if(user.email!==ADMIN_EMAIL){$('adminArea').style.display='none';$('noAccess').style.display='block';return;}
-    loadBooks();loadLecs();loadSums();
+    if(user.email!==ADMIN_EMAIL){alert('⚠️ الصفحة دي للأدمن بس.');location.href='dashboard.html';return;}
+    loadStats();loadBookings();
   });
-
-  function youtubeId(u){const m=u.match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([\w-]{11})/);if(m)return m[1];return /^[\w-]{11}$/.test(u)?u:null;}
-
-  async function loadBooks(){
-    const box=$('books');
+  async function loadStats(){
+    try{
+      const [stu,tea,lec,sum,codes,books]=await Promise.all([
+        db.collection('profiles').where('role','==','student').get(),
+        db.collection('profiles').where('role','==','teacher').get(),
+        db.collection('lectures').get(),
+        db.collection('summaries').get(),
+        db.collection('lecture_codes').get(),
+        db.collection('bookings').where('status','==','pending').get()
+      ]);
+      let used=0;codes.forEach(c=>{if(c.data().usedBy)used++;});
+      $('cStudents').textContent=stu.size;$('cTeachers').textContent=tea.size;$('cLectures').textContent=lec.size;
+      $('cSummaries').textContent=sum.size;$('cUsed').textContent=used+'/'+codes.size;$('cPending').textContent=books.size;
+      const arr=[];stu.forEach(d=>arr.push(d.data()));
+      arr.sort((a,b)=>new Date(b.createdAt||0)-new Date(a.createdAt||0));
+      if(!arr.length){$('studentsList').innerHTML='<p class="muted">لسه مفيش طلاب مسجلين.</p>';}
+      else{$('studentsList').innerHTML=arr.slice(0,8).map(s=>`<div class="item"><div class="item-top"><b>${s.name||'—'}</b></div><p class="item-meta">${s.email||''} • انضم ${s.createdAt?new Date(s.createdAt).toLocaleDateString('ar-EG',{day:'numeric',month:'long'}):'—'}</p></div>`).join('');}
+    }catch(e){console.warn(e);}
+  }
+  async function loadBookings(){
+    const box=$('booksList');
     try{
       const snap=await db.collection('bookings').get();
       const arr=[];snap.forEach(d=>arr.push(Object.assign({id:d.id},d.data())));
-      let pend=0;
-      if(!arr.length){box.innerHTML='<p class="muted">مفيش حجوزات حاليًا.</p>';}
-      else{
-        box.innerHTML=arr.map(b=>{
-          if((b.status||'pending')==='pending')pend++;
-          const st=b.status==='approved'?'مؤكد':b.status==='cancelled'?'مرفوض':'قيد المراجعة';
-          return '<div class="item"><div class="item-top"><b>'+b.student+'</b><span class="st '+(b.status||'pending')+'">'+st+'</span></div>'+
-          '<p class="item-meta">'+b.doctor+' • '+new Date(b.date).toLocaleDateString('ar-EG',{weekday:'long',day:'numeric',month:'long'})+' • '+b.time+'</p>'+
-          '<div class="item-actions">'+
-          (b.status!=='approved'?'<button class="ok" data-a="ok" data-id="'+b.id+'"><i class="fa-solid fa-check"></i> تأكيد الحجز</button>':'')+
-          (b.status!=='cancelled'?'<button class="no" data-a="no" data-id="'+b.id+'"><i class="fa-solid fa-xmark"></i> رفض</button>':'')+
-          '</div></div>';
-        }).join('');
-        box.querySelectorAll('button').forEach(btn=>btn.onclick=async()=>{
-          btn.disabled=true;
-          await db.collection('bookings').doc(btn.dataset.id).update({status:btn.dataset.a==='ok'?'approved':'cancelled'});
-          loadBooks();
-        });
-      }
-      $('cPend').textContent=pend;
+      arr.sort((a,b)=>new Date(b.createdAt||0)-new Date(a.createdAt||0));
+      if(!arr.length){box.innerHTML='<p class="muted">مفيش حجوزات حاليًا.</p>';return;}
+      box.innerHTML=arr.map(b=>{
+        const st=b.status==='approved'?'مؤكد':b.status==='cancelled'?'مرفوض':'قيد المراجعة';
+        return `<div class="item"><div class="item-top"><b>${b.student||'طالب'}</b><span class="st ${b.status||'pending'}">${st}</span></div><p class="item-meta">${b.doctor||''} • ${b.date?new Date(b.date).toLocaleDateString('ar-EG',{weekday:'long',day:'numeric',month:'long'}):''} • ${b.time||''}</p><div class="item-actions">${b.status!=='approved'?`<button class="ok" data-a="ok" data-id="${b.id}"><i class="fa-solid fa-check"></i> تأكيد</button>`:''}${b.status!=='cancelled'?`<button class="no" data-a="no" data-id="${b.id}"><i class="fa-solid fa-xmark"></i> رفض</button>`:''}</div></div>`;
+      }).join('');
+      box.querySelectorAll('button').forEach(btn=>btn.onclick=async()=>{btn.disabled=true;await db.collection('bookings').doc(btn.dataset.id).update({status:btn.dataset.a==='ok'?'approved':'cancelled'});loadBookings();loadStats();});
     }catch(e){box.innerHTML='<p class="muted">خطأ في تحميل الحجوزات.</p>';}
   }
-
-  async function loadLecs(){
-    const box=$('lecsList');
-    try{
-      const snap=await db.collection('lectures').get();
-      const arr=[];snap.forEach(d=>arr.push(Object.assign({id:d.id},d.data())));
-      $('cLec').textContent=arr.length;
-      if(!arr.length){box.innerHTML='<p class="muted">لسه مفيش محاضرات — ضيف أول واحدة من الفورم.</p>';return;}
-      box.innerHTML=arr.map(l=>'<div class="item"><div class="item-top"><b>'+l.title+'</b><span class="st pending">فرقة '+l.year+' — '+l.dept+'</span></div>'+
-        '<p class="item-meta">'+l.doctor+' • '+l.subject+' • '+l.dur+'</p>'+
-        '<button class="no" data-id="'+l.id+'"><i class="fa-solid fa-trash"></i> حذف</button></div>').join('');
-      box.querySelectorAll('button').forEach(btn=>btn.onclick=async()=>{
-        if(confirm('متأكد إنك عايز تحذف المحاضرة دي؟')){btn.disabled=true;await db.collection('lectures').doc(btn.dataset.id).delete();loadLecs();}
-      });
-    }catch(e){box.innerHTML='<p class="muted">خطأ في تحميل المحاضرات.</p>';}
-  }
-
-  async function loadSums(){
-    const box=$('sumsList');
-    try{
-      const snap=await db.collection('summaries').get();
-      const arr=[];snap.forEach(d=>arr.push(Object.assign({id:d.id},d.data())));
-      $('cSum').textContent=arr.length;
-      if(!arr.length){box.innerHTML='<p class="muted">لسه مفيش ملخصات — ضيف أول واحد من الفورم.</p>';return;}
-      box.innerHTML=arr.map(s=>'<div class="item"><div class="item-top"><b>'+s.title+'</b><span class="st pending">فرقة '+s.year+' — '+s.dept+'</span></div>'+
-        '<p class="item-meta">'+(s.doctor||'')+' • '+(s.subject||'')+'</p>'+
-        '<button class="no" data-id="'+s.id+'"><i class="fa-solid fa-trash"></i> حذف</button></div>').join('');
-      box.querySelectorAll('button').forEach(btn=>btn.onclick=async()=>{
-        if(confirm('متأكد إنك عايز تحذف الملخص ده؟')){btn.disabled=true;await db.collection('summaries').doc(btn.dataset.id).delete();loadSums();}
-      });
-    }catch(e){box.innerHTML='<p class="muted">خطأ في تحميل الملخصات.</p>';}
-  }
-
-  $('lecForm').addEventListener('submit',async e=>{
-    e.preventDefault();
-    $('errBox').style.display='none';$('okBox').style.display='none';
-    const title=$('title').value.trim(),subject=$('subject').value.trim(),doctor=$('doctor').value.trim();
-    const year=$('year').value,dept=$('dept').value,dur=$('dur').value.trim()||'—';
-    const yt=youtubeId($('yt').value.trim());
-    if(!title||!subject||!doctor){$('errBox').textContent='⚠️ كمّل العنوان والمادة والدكتور.';$('errBox').style.display='block';return;}
-    if(!yt){$('errBox').textContent='⚠️ رابط اليوتيوب مش صحيح — الصق الرابط كامل.';$('errBox').style.display='block';return;}
-    $('submitBtn').classList.add('loading');
-    try{
-      await db.collection('lectures').add({title,subject,doctor,year,dept,yt,dur,createdAt:new Date().toISOString()});
-      $('okBox').textContent='✅ المحاضرة اتنشرت! هتلاقيها في صفحة المحاضرات تحت فرقة '+year+' — '+dept+'.';
-      $('okBox').style.display='block';
-      $('lecForm').reset();loadLecs();
-    }catch(er){$('errBox').textContent='⚠️ '+((er&&er.message)||er);$('errBox').style.display='block';}
-    finally{$('submitBtn').classList.remove('loading');}
-  });
-
-  $('sumForm').addEventListener('submit',async e=>{
-    e.preventDefault();
-    const err=$('errBox2'),ok=$('okBox2');
-    err.style.display='none';ok.style.display='none';
-    const title=$('sTitle').value.trim(),subject=$('sSubject').value.trim(),doctor=$('sDoctor').value.trim();
-    const year=$('sYear').value,dept=$('sDept').value;
-    const link=$('sLink').value.trim();
-    if(!title||!subject||!doctor){err.textContent='⚠️ كمّل العنوان والمادة والدكتور.';err.style.display='block';return;}
-    if(!link.startsWith('http')){err.textContent='⚠️ الصق رابط الملخص من Google Drive الأول.';err.style.display='block';return;}
-    $('submitSum').classList.add('loading');
-    try{
-      await db.collection('summaries').add({title,subject,doctor,year,dept,link,createdAt:new Date().toISOString()});
-      ok.textContent='✅ الملخص اتنشر! هتلاقيه في صفحة الملخصات.';
-      ok.style.display='block';
-      $('sumForm').reset();loadSums();
-    }catch(er){err.textContent='⚠️ '+((er&&er.message)||er);err.style.display='block';}
-    finally{$('submitSum').classList.remove('loading');}
-  });
-
-  $('logoutBtn').onclick=async()=>{localStorage.removeItem('aea_user');await auth.signOut();location.href='index.html';};
+  $('logoutBtn').onclick=async()=>{localStorage.removeItem('bw_user');await auth.signOut();location.href='index.html';};
 </script>
 </body>
 </html>
